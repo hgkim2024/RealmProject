@@ -78,7 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				52AE49AD2BC4D3050077D8AF /* Log */,
-				52AE49A82BC4D00A0077D8AF /* realm */,
+				52AE49A82BC4D00A0077D8AF /* Realm */,
 				523B1A4B2BC4C06A007A6F7E /* AppDelegate.swift */,
 				523B1A4D2BC4C06A007A6F7E /* SceneDelegate.swift */,
 				523B1A4F2BC4C06A007A6F7E /* ViewController.swift */,
@@ -90,21 +90,21 @@
 			path = RealmProject;
 			sourceTree = "<group>";
 		};
-		52AE49A72BC4CFFF0077D8AF /* domain */ = {
+		52AE49A72BC4CFFF0077D8AF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				52AE49A92BC4D03F0077D8AF /* RealmRepository.swift */,
 				52AE49B02BC4D42D0077D8AF /* RealmProtocol.swift */,
 			);
-			path = domain;
+			path = Domain;
 			sourceTree = "<group>";
 		};
-		52AE49A82BC4D00A0077D8AF /* realm */ = {
+		52AE49A82BC4D00A0077D8AF /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				52AE49A72BC4CFFF0077D8AF /* domain */,
+				52AE49B22BC4E13C0077D8AF /* Repository */,
+				52AE49A72BC4CFFF0077D8AF /* Domain */,
 			);
-			path = realm;
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		52AE49AD2BC4D3050077D8AF /* Log */ = {
@@ -113,6 +113,14 @@
 				52AE49AE2BC4D30C0077D8AF /* Log.swift */,
 			);
 			path = Log;
+			sourceTree = "<group>";
+		};
+		52AE49B22BC4E13C0077D8AF /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				52AE49A92BC4D03F0077D8AF /* RealmRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		DA8EC8EADFB35DA18FD3FB98 /* Pods */ = {
