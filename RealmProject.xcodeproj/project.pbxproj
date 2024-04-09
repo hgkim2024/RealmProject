@@ -15,7 +15,7 @@
 		523B1A582BC4C06B007A6F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523B1A562BC4C06B007A6F7E /* LaunchScreen.storyboard */; };
 		52AE49AA2BC4D03F0077D8AF /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49A92BC4D03F0077D8AF /* RealmRepository.swift */; };
 		52AE49AF2BC4D30C0077D8AF /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49AE2BC4D30C0077D8AF /* Log.swift */; };
-		52AE49B12BC4D42D0077D8AF /* RealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49B02BC4D42D0077D8AF /* RealmProtocol.swift */; };
+		52AE49B42BC4E1950077D8AF /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49B32BC4E1950077D8AF /* Item.swift */; };
 		AE8EE74D85ADB7CD6FCDD3BB /* Pods_RealmProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5313B94ED6C20E096D0279 /* Pods_RealmProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +30,7 @@
 		523B1A592BC4C06B007A6F7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52AE49A92BC4D03F0077D8AF /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		52AE49AE2BC4D30C0077D8AF /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		52AE49B02BC4D42D0077D8AF /* RealmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProtocol.swift; sourceTree = "<group>"; };
+		52AE49B32BC4E1950077D8AF /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		60910AE18980DE0BC6F23BC3 /* Pods-RealmProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmProject.release.xcconfig"; path = "Target Support Files/Pods-RealmProject/Pods-RealmProject.release.xcconfig"; sourceTree = "<group>"; };
 		AB5313B94ED6C20E096D0279 /* Pods_RealmProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F54ADCF6D27EE9E13135B2F2 /* Pods-RealmProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmProject.debug.xcconfig"; path = "Target Support Files/Pods-RealmProject/Pods-RealmProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 		52AE49A72BC4CFFF0077D8AF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				52AE49B02BC4D42D0077D8AF /* RealmProtocol.swift */,
+				52AE49B32BC4E1950077D8AF /* Item.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -248,9 +248,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				52AE49AA2BC4D03F0077D8AF /* RealmRepository.swift in Sources */,
-				52AE49B12BC4D42D0077D8AF /* RealmProtocol.swift in Sources */,
 				523B1A502BC4C06A007A6F7E /* ViewController.swift in Sources */,
 				52AE49AF2BC4D30C0077D8AF /* Log.swift in Sources */,
+				52AE49B42BC4E1950077D8AF /* Item.swift in Sources */,
 				523B1A4C2BC4C06A007A6F7E /* AppDelegate.swift in Sources */,
 				523B1A4E2BC4C06A007A6F7E /* SceneDelegate.swift in Sources */,
 			);

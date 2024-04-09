@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 
-class RealmRepository<T: RealmProtocol, ID> {
+class RealmRepository<T: Object, ID> {
     
     func getOne(_ key: ID) -> T? {
         let realm = try! Realm()
