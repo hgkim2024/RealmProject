@@ -12,7 +12,7 @@ import RealmSwift
 class RealmRepository<T: Object, ID> {
     
     func getOne(_ key: ID) -> T? {
-        let realm = try! Realm()
+        let realm = getRealm()
         
         let result = realm.objects(T.self)
             .filter("key == \(key)")
@@ -21,13 +21,22 @@ class RealmRepository<T: Object, ID> {
         return result
     }
     
+    func getRealm() -> Realm {
+        // TODO: - 마이그레이션 코드 추가
+        return try! Realm()
+    }
+    
     func getAll() -> Results<T> {
-        let realm = try! Realm()
+        let realm = getRealm()
         return realm.objects(T.self)
     }
     
+    func getAllCount() -> Int {
+        return getAll().count
+    }
+    
     func add(_ object: T) { // : Create, Update
-        let realm = try! Realm()
+        let realm = getRealm()
         do {
             try realm.write {
                 realm.add(object, update: .modified)
@@ -39,7 +48,7 @@ class RealmRepository<T: Object, ID> {
     }
     
     func delete(_ object: T) { // : Delete
-        let realm = try! Realm()
+        let realm = getRealm()
         
         do {
             try realm.write {
@@ -51,4 +60,16 @@ class RealmRepository<T: Object, ID> {
         }
     }
     
+    func deleteAll() {
+        let realm = getRealm()
+        
+        do {
+            try realm.write {
+                realm.deleteAll()
+            }
+        }
+        catch let e {
+            Log.tag(.DB).tag(.DELETE).tag(.FAIL).e(e.localizedDescription)
+        }
+    }
 }
