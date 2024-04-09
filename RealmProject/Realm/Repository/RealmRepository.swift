@@ -14,9 +14,31 @@ class RealmRepository<T: Object, ID> {
     func getOne(_ key: ID) -> T? {
         let realm = getRealm()
         
+        if key is String {
+            return realm.objects(T.self)
+                .filter("key == %@", key)
+                .first
+        } else {
+            return realm.objects(T.self)
+                .filter("key == \(key)")
+                .first
+        }
+    }
+    
+    func getFirst() -> T? {
+        let realm = getRealm()
+        
         let result = realm.objects(T.self)
-            .filter("key == \(key)")
             .first
+        
+        return result
+    }
+    
+    func getLast() -> T? {
+        let realm = getRealm()
+        
+        let result = realm.objects(T.self)
+            .last
         
         return result
     }

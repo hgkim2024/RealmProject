@@ -19,6 +19,7 @@ enum Tag: Int {
     case ADD
     case DELETE
     case SELECT
+    case PAGING
     
     case SUCCESS
     case FAIL
