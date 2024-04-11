@@ -16,6 +16,7 @@ class ItemManager {
     // MARK: - n 개 데이터가 있을 때 Paging Test
     let createSize = 100000
     
+    // MARK: - k 번 페이징 반복
     let printCount = 30
     
     // MARK: - Pasination Test Code

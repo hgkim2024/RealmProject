@@ -12,6 +12,7 @@ import RealmSwift
 class ItemRepository: RealmRepository<Item, String> {
     static let shared = ItemRepository()
     
+    // MARK: - 한 페이지에 데이터 갯수
     let pagingSize = 50
     
     private override init() {
