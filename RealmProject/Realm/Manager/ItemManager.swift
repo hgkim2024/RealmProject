@@ -22,6 +22,7 @@ class ItemManager {
     // MARK: - Pasination Test Code
     func testPaging() {
         
+        // MARK: - Item Data 생성
         let realmItemSize = ItemRepository.shared.getAllCount()
         if realmItemSize == 0 || realmItemSize > createSize {
             ItemRepository.shared.deleteAll()
@@ -30,6 +31,7 @@ class ItemManager {
             ItemRepository.shared.autoAdd(createSize - realmItemSize)
         }
         
+        // MARK: - Paging
 //        printPagingFromStartToEnd()
         printPagingFromEndToStart()
     }
