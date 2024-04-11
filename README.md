@@ -12,7 +12,7 @@
 
 <br>
 
-### Pagination Test Code
+### Realm Pagination Test Code
 - <code>ItemManager.testPaging()</code>
 - 테스트 절차
     - n 개  데이터 생성
@@ -32,3 +32,25 @@ printPagingFromStartToEnd()
 
 <br>
 
+### Realm Notification Token
+- [Realm Notification Token 설명 글](https://www.notion.so/Realm-Notification-Token-1b4b652aa5c4471298a0015063a1e0f0?pvs=4)
+- 아래 Class 를 이용하여 Notifcation Token 을 등록하면 설정된 Table 의 CRUD Event 를 받을 수 있다.
+
+```swift
+class RealmTokenWorker<T: Object>: RealmBackgroundWorker {
+    private var token: NotificationToken?
+    
+    init(_ query: @escaping () -> Results<T>?, _ block: @escaping (RealmCollectionChange<Results<T>>) -> Void) {
+        super.init()
+        start { [weak self] in
+            self?.token = query()?.observe(block)
+        }
+    }
+
+    deinit {
+      token?.invalidate()
+    }
+}
+```
+
+<br>
