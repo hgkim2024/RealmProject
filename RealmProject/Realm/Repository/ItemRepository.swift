@@ -39,7 +39,7 @@ class ItemRepository: RealmRepository<Item, String> {
         }
     }
     
-    func pagingFromStart(startItemDto: ItemDto) -> [ItemDto]? {
+    func pagingFromStartToEnd(startItemDto: ItemDto) -> [ItemDto]? {
         guard let startItem = getOne(startItemDto.key),
               let firstItem = getFirst() else {
             Log.tag(.DB).tag(.PAGING).e("not found start item")
@@ -67,7 +67,7 @@ class ItemRepository: RealmRepository<Item, String> {
         return itemDtos
     }
     
-    func pagingFromLast(endItemDto: ItemDto) -> [ItemDto]? {
+    func pagingFromEndToStart(endItemDto: ItemDto) -> [ItemDto]? {
         guard let endItem = getOne(endItemDto.key),
               let lastItem = getLast() else {
             Log.tag(.DB).tag(.PAGING).e("not found end item")

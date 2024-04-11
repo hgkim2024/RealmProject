@@ -17,17 +17,17 @@ class ViewController: UIViewController {
         ItemRepository.shared.autoAdd(17)
         
 //        ItemRepository.shared.printAll()
-        printPagingFromStart()
+        printPagingFromStartToEnd()
 //        printPagingFromLast()
     }
 
-    func printPagingFromStart() {
+    func printPagingFromStartToEnd() {
         if let firstItem = ItemRepository.shared.getFirst(),
-           var dtos = ItemRepository.shared.pagingFromStart(startItemDto: firstItem.toDto()) {
+           var dtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
             
             while true {
                 if let lastItem = dtos.last {
-                    let pageDtos = ItemRepository.shared.pagingFromStart(startItemDto: lastItem) ?? []
+                    let pageDtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: lastItem) ?? []
                     if pageDtos.isEmpty == true {
                         break
                     }
@@ -41,13 +41,13 @@ class ViewController: UIViewController {
         }
     }
     
-    func printPagingFromLast() {
+    func printPagingFromEndToStart() {
         if let lastItem = ItemRepository.shared.getLast(),
-           var dtos = ItemRepository.shared.pagingFromLast(endItemDto: lastItem.toDto()) {
+           var dtos = ItemRepository.shared.pagingFromEndToStart(endItemDto: lastItem.toDto()) {
             
             while true {
                 if let firstItem = dtos.last {
-                    let pageDtos = ItemRepository.shared.pagingFromLast(endItemDto: firstItem) ?? []
+                    let pageDtos = ItemRepository.shared.pagingFromEndToStart(endItemDto: firstItem) ?? []
                     if pageDtos.isEmpty == true {
                         break
                     }
