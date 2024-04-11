@@ -19,7 +19,6 @@ class Item: Object {
     static func create(number: Int) -> Item {
         let item = Item()
         item.number = number
-        Log.tag(.DB).tag(.ADD).d("number: \(number)")
         return item
     }
 

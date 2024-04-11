@@ -19,6 +19,8 @@
 		52AE49B62BC4F8790077D8AF /* ItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49B52BC4F8790077D8AF /* ItemRepository.swift */; };
 		52AE49BE2BC4FE540077D8AF /* ItemDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49BD2BC4FE540077D8AF /* ItemDto.swift */; };
 		52E080752BC783C3008F4F11 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080742BC783C3008F4F11 /* ItemManager.swift */; };
+		52E080782BC7C6FF008F4F11 /* RealmBackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080772BC7C6FF008F4F11 /* RealmBackgroundWorker.swift */; };
+		52E0807A2BC7C7FA008F4F11 /* RealmTokenWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */; };
 		AE8EE74D85ADB7CD6FCDD3BB /* Pods_RealmProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5313B94ED6C20E096D0279 /* Pods_RealmProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		52AE49B52BC4F8790077D8AF /* ItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRepository.swift; sourceTree = "<group>"; };
 		52AE49BD2BC4FE540077D8AF /* ItemDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDto.swift; sourceTree = "<group>"; };
 		52E080742BC783C3008F4F11 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
+		52E080772BC7C6FF008F4F11 /* RealmBackgroundWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBackgroundWorker.swift; sourceTree = "<group>"; };
+		52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTokenWorker.swift; sourceTree = "<group>"; };
 		60910AE18980DE0BC6F23BC3 /* Pods-RealmProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmProject.release.xcconfig"; path = "Target Support Files/Pods-RealmProject/Pods-RealmProject.release.xcconfig"; sourceTree = "<group>"; };
 		AB5313B94ED6C20E096D0279 /* Pods_RealmProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F54ADCF6D27EE9E13135B2F2 /* Pods-RealmProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmProject.debug.xcconfig"; path = "Target Support Files/Pods-RealmProject/Pods-RealmProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 		52AE49A82BC4D00A0077D8AF /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				52E080762BC7C6F0008F4F11 /* Worker */,
 				52E080732BC783B8008F4F11 /* Manager */,
 				52AE49B22BC4E13C0077D8AF /* Repository */,
 				52AE49A72BC4CFFF0077D8AF /* Domain */,
@@ -146,6 +151,15 @@
 				52E080742BC783C3008F4F11 /* ItemManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		52E080762BC7C6F0008F4F11 /* Worker */ = {
+			isa = PBXGroup;
+			children = (
+				52E080772BC7C6FF008F4F11 /* RealmBackgroundWorker.swift */,
+				52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */,
+			);
+			path = Worker;
 			sourceTree = "<group>";
 		};
 		DA8EC8EADFB35DA18FD3FB98 /* Pods */ = {
@@ -273,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52AE49AA2BC4D03F0077D8AF /* RealmRepository.swift in Sources */,
+				52E0807A2BC7C7FA008F4F11 /* RealmTokenWorker.swift in Sources */,
 				523B1A502BC4C06A007A6F7E /* ViewController.swift in Sources */,
 				52AE49AF2BC4D30C0077D8AF /* Log.swift in Sources */,
 				52E080752BC783C3008F4F11 /* ItemManager.swift in Sources */,
@@ -281,6 +296,7 @@
 				523B1A4E2BC4C06A007A6F7E /* SceneDelegate.swift in Sources */,
 				52AE49BE2BC4FE540077D8AF /* ItemDto.swift in Sources */,
 				52AE49B62BC4F8790077D8AF /* ItemRepository.swift in Sources */,
+				52E080782BC7C6FF008F4F11 /* RealmBackgroundWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
