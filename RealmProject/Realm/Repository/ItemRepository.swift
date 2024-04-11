@@ -35,7 +35,6 @@ class ItemRepository: RealmRepository<Item, String> {
 //                        Log.tag(.DB).tag(.ADD).d("insertions: \(insertions.count)")
                     }
                 }
-                break
             case .error(_):
                 break
             }
@@ -104,10 +103,6 @@ class ItemRepository: RealmRepository<Item, String> {
         }
         
         let items = getAll().sorted(byKeyPath: "number", ascending: false)
-//        guard var endIdx = items.firstIndex(of: endItem) else {
-//            Log.tag(.DB).tag(.PAGING).e("not found end item index")
-//            return nil
-//        }
         
         guard var startIdx = items.firstIndex(of: endItem) else {
             Log.tag(.DB).tag(.PAGING).e("not found start item index")
