@@ -18,7 +18,7 @@ class ItemManager {
     
     let printCount = 30
     
-    // MARK: - Item Service Test Code
+    // MARK: - Pasination Test Code
     func testPaging() {
         
         let realmItemSize = ItemRepository.shared.getAllCount()
@@ -33,7 +33,7 @@ class ItemManager {
         printPagingFromEndToStart()
     }
     
-    // MARK: - Paging Code
+    // MARK: - Pasination Code
     func printPagingFromStartToEnd() {
         if let firstItem = ItemRepository.shared.getFirst(),
            var dtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
