@@ -23,6 +23,7 @@ import RealmSwift
         
         thread = Thread { [weak self] in
             while (self != nil && !self!.thread.isCancelled) {
+                // : Runs the loop once, blocking for input in the specified mode until a given data.
                 RunLoop.current.run(
                     mode: RunLoop.Mode.default,
                     before: Date.distantFuture)
