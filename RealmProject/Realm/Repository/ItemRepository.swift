@@ -12,7 +12,7 @@ import RealmSwift
 class ItemRepository: RealmRepository<Item, String> {
     static let shared = ItemRepository()
     
-    let pagingSize = 3
+    let pagingSize = 50
     
     private override init() {
         super.init()
@@ -46,7 +46,7 @@ class ItemRepository: RealmRepository<Item, String> {
             Log.tag(.DB).tag(.PAGING).e("not found start item")
             return nil
         }
-        let items = getAll().sorted(by: { $0.number < $1.number })
+        let items = getAll().sorted(byKeyPath: "number", ascending: true)
         guard var startIdx = items.firstIndex(of: startItem) else {
             Log.tag(.DB).tag(.PAGING).e("not found start item index")
             return nil
@@ -75,28 +75,29 @@ class ItemRepository: RealmRepository<Item, String> {
             return nil
         }
         
-        let items = getAll().sorted(by: { $0.number < $1.number })
-        guard var endIdx = items.firstIndex(of: endItem) else {
-            Log.tag(.DB).tag(.PAGING).e("not found end item index")
+        let items = getAll().sorted(byKeyPath: "number", ascending: false)
+//        guard var endIdx = items.firstIndex(of: endItem) else {
+//            Log.tag(.DB).tag(.PAGING).e("not found end item index")
+//            return nil
+//        }
+        
+        guard var startIdx = items.firstIndex(of: endItem) else {
+            Log.tag(.DB).tag(.PAGING).e("not found start item index")
             return nil
         }
         
-        if endIdx == 0 {
-            return []
+        if endItem.key != lastItem.key {
+            startIdx += 1
         }
         
-        if endItem.key == lastItem.key {
-            endIdx += 1
-        }
-        
-        let startIdx = endIdx - pagingSize
+        let endIdx = startIdx + pagingSize
         var itemDtos: [ItemDto] = []
         
         for item in items[max(0, startIdx) ..< min(endIdx, items.count)] {
             itemDtos.append(item.toDto())
         }
         
-        itemDtos = itemDtos.sorted(by: { $0.number > $1.number })
+//        itemDtos = itemDtos.sorted(by: { $0.number > $1.number })
         
         printDtos(itemDtos)
         

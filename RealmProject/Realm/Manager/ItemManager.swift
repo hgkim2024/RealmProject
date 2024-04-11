@@ -13,14 +13,24 @@ class ItemManager {
     static let shared = ItemManager()
     private init() { }
     
+    // MARK: - n 개 데이터가 있을 때 Paging Test
+    let createSize = 100000
+    
+    let printCount = 30
+    
     // MARK: - Item Service Test Code
-    func test() {
-        ItemRepository.shared.deleteAll()
-        ItemRepository.shared.autoAdd(17)
+    func testPaging() {
         
-//        ItemRepository.shared.printAll()
-        printPagingFromStartToEnd()
-//        printPagingFromLast()
+        let realmItemSize = ItemRepository.shared.getAllCount()
+        if realmItemSize == 0 || realmItemSize > createSize {
+            ItemRepository.shared.deleteAll()
+            ItemRepository.shared.autoAdd(createSize)
+        } else if realmItemSize < createSize {
+            ItemRepository.shared.autoAdd(createSize - realmItemSize)
+        }
+        
+//        printPagingFromStartToEnd()
+        printPagingFromEndToStart()
     }
     
     // MARK: - Paging Code
@@ -28,7 +38,12 @@ class ItemManager {
         if let firstItem = ItemRepository.shared.getFirst(),
            var dtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
             
+            var i = 0
             while true {
+                if i >= printCount - 1 {
+                    break
+                }
+                
                 if let lastItem = dtos.last {
                     let pageDtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: lastItem) ?? []
                     if pageDtos.isEmpty == true {
@@ -38,9 +53,10 @@ class ItemManager {
                 } else {
                     break
                 }
+                i += 1
             }
             
-            ItemRepository.shared.printDtos(dtos)
+//            ItemRepository.shared.printDtos(dtos)
         }
     }
     
@@ -48,7 +64,12 @@ class ItemManager {
         if let lastItem = ItemRepository.shared.getLast(),
            var dtos = ItemRepository.shared.pagingFromEndToStart(endItemDto: lastItem.toDto()) {
             
+            var i = 0
             while true {
+                if i >= printCount - 1 {
+                    break
+                }
+                
                 if let firstItem = dtos.last {
                     let pageDtos = ItemRepository.shared.pagingFromEndToStart(endItemDto: firstItem) ?? []
                     if pageDtos.isEmpty == true {
@@ -58,9 +79,10 @@ class ItemManager {
                 } else {
                     break
                 }
+                i += 1
             }
             
-            ItemRepository.shared.printDtos(dtos)
+//            ItemRepository.shared.printDtos(dtos)
         }
     }
 }
