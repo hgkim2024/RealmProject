@@ -8,6 +8,7 @@
 import Foundation
 import RealmSwift
 
+// MARK: - Item Object 의 필요한 Query 를 모아둔 클래스
 class ItemRepository: RealmRepository<Item, String> {
     static let shared = ItemRepository()
     

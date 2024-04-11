@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-
+// MARK: - Repository 에서 공통으로 처리할 로직을 모아둔 클래스
 class RealmRepository<T: Object, ID> {
     
     func getOne(_ key: ID) -> T? {
