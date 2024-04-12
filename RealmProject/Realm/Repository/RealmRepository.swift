@@ -83,7 +83,7 @@ class RealmRepository<T: Object, ID> {
         }
     }
     
-    func deleteAll() {
+    func deleteAll() { // : All Table Drop
         let realm = getRealm()
         
         do {
