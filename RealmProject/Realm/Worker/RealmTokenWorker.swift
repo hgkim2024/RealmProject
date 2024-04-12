@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-// : https://academy.realm.io/posts/realm-notifications-on-background-threads-with-swift/
+// MARK: - Spinning a new thread & adding a runloop: https://academy.realm.io/posts/realm-notifications-on-background-threads-with-swift/
 class RealmTokenWorker<T: Object>: RealmBackgroundWorker {
     private var token: NotificationToken?
     
