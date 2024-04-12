@@ -12,10 +12,10 @@ import RealmSwift
 class RealmTokenWorker<T: Object>: RealmBackgroundWorker {
     private var token: NotificationToken?
     
-    init(_ query: @escaping () -> Results<T>?, _ block: @escaping (RealmCollectionChange<Results<T>>) -> Void) {
+    init(_ query: @escaping () -> Results<T>?,_ keyPaths: [String]? = nil, _ block: @escaping (RealmCollectionChange<Results<T>>) -> Void) {
         super.init()
         start { [weak self] in
-            self?.token = query()?.observe(block)
+            self?.token = query()?.observe(keyPaths: keyPaths, block)
         }
     }
 
