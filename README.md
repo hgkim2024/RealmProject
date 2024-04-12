@@ -32,7 +32,7 @@ printPagingFromStartToEnd()
 
 <br>
 
-### Realm Notification Token
+## Realm Notification Token
 - [Realm Notification Token 설명 글](https://www.notion.so/Realm-Notification-Token-1b4b652aa5c4471298a0015063a1e0f0?pvs=4)
 - 아래 Class 를 이용하여 Notifcation Token 을 등록하면 설정된 Table 의 CRUD Event 를 받을 수 있다.
 
