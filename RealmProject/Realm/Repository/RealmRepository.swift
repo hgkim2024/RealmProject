@@ -34,16 +34,17 @@ class RealmRepository<T: Object, ID> {
     }
     
     func getOne(_ key: ID) -> T? {
-        if key is String {
-            return realm.objects(T.self)
-                .filter("key == %@", key)
-                .first
-        } else {
-            // TODO: - 크래시 발생되는 Type 이 있다면 추가 분기 필요
-            return realm.objects(T.self)
-                .filter("key == \(key)")
-                .first
-        }
+        return realm.object(ofType: T.self, forPrimaryKey: key)
+//        if key is String {
+//            return realm.objects(T.self)
+//                .filter("key == %@", key)
+//                .first
+//        } else {
+//            // TODO: - 크래시 발생되는 Type 이 있다면 추가 분기 필요
+//            return realm.objects(T.self)
+//                .filter("key == \(key)")
+//                .first
+//        }
     }
     
     func add(_ object: T) { // : Create, Update
