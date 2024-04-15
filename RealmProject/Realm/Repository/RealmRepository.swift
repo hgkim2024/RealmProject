@@ -59,6 +59,12 @@ class RealmRepository<T: Object, ID> {
         }
     }
     
+    func delete(_ key: ID) {
+        if let one = getOne(key) {
+            delete(one)
+        }
+    }
+    
     func deleteAll() { // : All Table Drop
         do {
             try realm.write {
