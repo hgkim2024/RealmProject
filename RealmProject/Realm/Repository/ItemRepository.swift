@@ -15,36 +15,7 @@ class ItemRepository: RealmRepository<Item, String> {
     // MARK: - 한 페이지에 데이터 갯수
     let pagingSize = 50
     
-    // MARK: - Notification Token: Received Realm Change Event
-    var insertTokenWorker: RealmTokenWorker<Item>?
-    
-    private override init() {
-        super.init()
-        
-        insertTokenWorker = RealmTokenWorker({ [weak self] in self?.getAll() }) { changes in
-            switch changes {
-                
-            case .initial(_):
-                break
-            case .update(let results, deletions: let deletions, insertions: let insertions, modifications: let modifications):
-                if !insertions.isEmpty {
-                    // : results 는 getAll 과 동일한 결과이다.
-                    let items = results.sorted(byKeyPath: "number", ascending: false)
-                    for i in insertions.indices { // : 아래 처럼 접근해야 insert 된 순서대로 접근할 수 있다.
-                        Log.tag(.DB).tag(.ADD).d("number: \(items[insertions.count - i - 1].number)")
-                        // : 다른 곳에 Event 전달이 필요하다면 여기서 전달하자
-//                        Log.tag(.DB).tag(.ADD).d("insertions: \(insertions.count)")
-                    }
-                }
-            case .error(_):
-                break
-            }
-        }
-    }
-    
-    deinit {
-        insertTokenWorker = nil
-    }
+    private override init() { super.init() }
     
     func autoAdd() {
         var number = 0

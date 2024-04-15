@@ -11,13 +11,42 @@ import RealmSwift
 // MARK: - Item Manager - Repository 에서 읽어온 데이터를 처리하는(비지니스) 로직이 담긴 클래스
 class ItemManager {
     static let shared = ItemManager()
-    private init() { }
     
     // MARK: - n 개 데이터가 있을 때 Paging Test
-    let createSize = 100000
+    let createSize = 1000
     
     // MARK: - k 번 페이징 반복
     let printCount = 30
+    
+    // MARK: - Notification Token: Received Realm Change Event
+    var insertTokenWorker: RealmTokenWorker<Item>?
+    
+    private init() {
+        insertTokenWorker = RealmTokenWorker({ ItemRepository.shared.getAll() }) { changes in
+            switch changes {
+                
+            case .initial(_):
+                break
+            case .update(let results, deletions: let deletions, insertions: let insertions, modifications: let modifications):
+                if !insertions.isEmpty {
+                    // : results 는 getAll 과 동일한 결과이다.
+                    let items = results.sorted(byKeyPath: "number", ascending: false)
+                    for i in insertions.indices { // : 아래 처럼 접근해야 insert 된 순서대로 접근할 수 있다.
+                        Log.tag(.DB).tag(.ADD).d("number: \(items[insertions.count - i - 1].number)")
+                        // : 다른 곳에 Event 전달이 필요하다면 여기서 전달하자
+//                        Log.tag(.DB).tag(.ADD).d("insertions: \(insertions.count)")
+                    }
+                }
+            case .error(_):
+                break
+            }
+        }
+    }
+    
+    
+    deinit {
+        insertTokenWorker = nil
+    }
     
     // MARK: - Pasination Test Code
     func testPaging() {
