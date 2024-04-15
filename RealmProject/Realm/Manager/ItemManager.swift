@@ -13,7 +13,7 @@ class ItemManager {
     static let shared = ItemManager()
     
     // MARK: - n 개 데이터가 있을 때 Paging Test
-    let createSize = 1000
+    let createSize = 100000
     
     // MARK: - k 번 페이징 반복
     let printCount = 30
