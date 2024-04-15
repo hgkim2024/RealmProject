@@ -13,7 +13,7 @@ class ItemRepository: RealmRepository<Item, String> {
     static let shared = ItemRepository()
     
     // MARK: - 한 페이지에 데이터 갯수
-    let pagingSize = 50
+    let pageSize = 50
     
     private override init() { super.init() }
     
@@ -40,62 +40,22 @@ class ItemRepository: RealmRepository<Item, String> {
     }
     
     func pagingFromStartToEnd(startItemDto: ItemDto) -> [ItemDto]? {
-        guard let startItem = getOne(startItemDto.key),
-              let firstItem = getFirst() else {
-            Log.tag(.DB).tag(.PAGING).e("not found start item")
-            return nil
-        }
-        let items = getAll().sorted(byKeyPath: "number", ascending: true)
-        guard var startIdx = items.firstIndex(of: startItem) else {
-            Log.tag(.DB).tag(.PAGING).e("not found start item index")
+        guard let items = getPage(startObjectKey: startItemDto.key, byKeyPath: "number", ascending: true, pageSize: pageSize) else {
             return nil
         }
         
-        if startItem.key != firstItem.key {
-            startIdx += 1
-        }
-        
-        let endIdx = startIdx + pagingSize
-        var itemDtos: [ItemDto] = []
-        
-        for item in items[max(0, startIdx) ..< min(endIdx, items.count)] {
-            itemDtos.append(item.toDto())
-        }
-        
+        let itemDtos = items.map({ $0.toDto()})
         printDtos(itemDtos)
-        
         return itemDtos
     }
     
     func pagingFromEndToStart(endItemDto: ItemDto) -> [ItemDto]? {
-        guard let endItem = getOne(endItemDto.key),
-              let lastItem = getLast() else {
-            Log.tag(.DB).tag(.PAGING).e("not found end item")
+        guard let items = getPage(startObjectKey: endItemDto.key, byKeyPath: "number", ascending: false, pageSize: pageSize) else {
             return nil
         }
         
-        let items = getAll().sorted(byKeyPath: "number", ascending: false)
-        
-        guard var startIdx = items.firstIndex(of: endItem) else {
-            Log.tag(.DB).tag(.PAGING).e("not found start item index")
-            return nil
-        }
-        
-        if endItem.key != lastItem.key {
-            startIdx += 1
-        }
-        
-        let endIdx = startIdx + pagingSize
-        var itemDtos: [ItemDto] = []
-        
-        for item in items[max(0, startIdx) ..< min(endIdx, items.count)] {
-            itemDtos.append(item.toDto())
-        }
-        
-//        itemDtos = itemDtos.sorted(by: { $0.number > $1.number })
-        
+        let itemDtos = items.map({ $0.toDto()})
         printDtos(itemDtos)
-        
         return itemDtos
     }
     

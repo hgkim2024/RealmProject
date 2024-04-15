@@ -95,4 +95,70 @@ class RealmRepository<T: Object, ID> {
             Log.tag(.DB).tag(.DELETE).tag(.FAIL).e(e.localizedDescription)
         }
     }
+    
+    func getPage(startObjectKey: ID, byKeyPath: String, ascending: Bool, pageSize: Int) -> [T]? {
+        
+        if ascending {
+            return getPageFromStartToEnd(startObjectKey: startObjectKey, byKeyPath: byKeyPath, pageSize: pageSize)
+        } else {
+            return getPageFromEndToStart(startObjectKey: startObjectKey, byKeyPath: byKeyPath, pageSize: pageSize)
+        }
+
+    }
+    
+    private func getPageFromStartToEnd(startObjectKey: ID, byKeyPath: String, pageSize: Int) -> [T]? {
+        guard let startItem = getOne(startObjectKey),
+              let firstItem = getFirst() else {
+            Log.tag(.DB).tag(.PAGING).e("not found start item")
+            return nil
+        }
+        let results = getAll().sorted(byKeyPath: byKeyPath, ascending: true)
+        guard var startIdx = results.firstIndex(of: startItem) else {
+            Log.tag(.DB).tag(.PAGING).e("not found start item index")
+            return nil
+        }
+        
+        if !startItem.isEqual(firstItem) {
+            startIdx += 1
+        }
+        
+        let endIdx = startIdx + pageSize
+        var items: [T] = []
+        
+        for item in results[max(0, startIdx) ..< min(endIdx, results.count)] {
+            items.append(item)
+        }
+        
+        return items
+    }
+    
+    private func getPageFromEndToStart(startObjectKey: ID, byKeyPath: String, pageSize: Int) -> [T]? {
+        guard let endItem = getOne(startObjectKey),
+              let lastItem = getLast() else {
+            Log.tag(.DB).tag(.PAGING).e("not found end item")
+            return nil
+        }
+        
+        let results = getAll().sorted(byKeyPath: byKeyPath, ascending: false)
+        
+        guard var startIdx = results.firstIndex(of: endItem) else {
+            Log.tag(.DB).tag(.PAGING).e("not found start item index")
+            return nil
+        }
+        
+        if !endItem.isEqual(lastItem) {
+            startIdx += 1
+        }
+        
+        let endIdx = startIdx + pageSize
+        var items: [T] = []
+        
+        for item in results[max(0, startIdx) ..< min(endIdx, results.count)] {
+            items.append(item)
+        }
+        
+//        itemDtos = itemDtos.sorted(by: { $0.number > $1.number })
+        
+        return items
+    }
 }
