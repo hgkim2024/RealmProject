@@ -28,6 +28,7 @@ class ItemRepository: RealmRepository<Item, String> {
                 break
             case .update(let results, deletions: let deletions, insertions: let insertions, modifications: let modifications):
                 if !insertions.isEmpty {
+                    // : results 는 getAll 과 동일한 결과이다.
                     let items = results.sorted(byKeyPath: "number", ascending: false)
                     for i in insertions.indices { // : 아래 처럼 접근해야 insert 된 순서대로 접근할 수 있다.
                         Log.tag(.DB).tag(.ADD).d("number: \(items[insertions.count - i - 1].number)")
