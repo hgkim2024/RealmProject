@@ -12,9 +12,28 @@ import RealmSwift
 class RealmRepository<T: Object, ID> {
     
     // MARK: - CRUD
+    var first: T? {
+        return all.first
+    }
+    
+    var last: T? {
+        return all.last
+    }
+    
+    var realm: Realm {
+        // TODO: - 마이그레이션 코드 추가
+        return try! Realm()
+    }
+    
+    var all: Results<T> {
+        return realm.objects(T.self)
+    }
+    
+    var allCount: Int {
+        return all.count
+    }
+    
     func getOne(_ key: ID) -> T? {
-        let realm = getRealm()
-        
         if key is String {
             return realm.objects(T.self)
                 .filter("key == %@", key)
@@ -27,40 +46,7 @@ class RealmRepository<T: Object, ID> {
         }
     }
     
-    func getFirst() -> T? {
-        let realm = getRealm()
-        
-        let result = realm.objects(T.self)
-            .first
-        
-        return result
-    }
-    
-    func getLast() -> T? {
-        let realm = getRealm()
-        
-        let result = realm.objects(T.self)
-            .last
-        
-        return result
-    }
-    
-    func getRealm() -> Realm {
-        // TODO: - 마이그레이션 코드 추가
-        return try! Realm()
-    }
-    
-    func getAll() -> Results<T> {
-        let realm = getRealm()
-        return realm.objects(T.self)
-    }
-    
-    func getAllCount() -> Int {
-        return getAll().count
-    }
-    
     func add(_ object: T) { // : Create, Update
-        let realm = getRealm()
         do {
             try realm.write {
                 realm.add(object, update: .modified)
@@ -72,8 +58,6 @@ class RealmRepository<T: Object, ID> {
     }
     
     func delete(_ object: T) { // : Delete
-        let realm = getRealm()
-        
         do {
             try realm.write {
                 realm.delete(object)
@@ -85,8 +69,6 @@ class RealmRepository<T: Object, ID> {
     }
     
     func deleteAll() { // : All Table Drop
-        let realm = getRealm()
-        
         do {
             try realm.write {
                 realm.deleteAll()
@@ -110,11 +92,11 @@ class RealmRepository<T: Object, ID> {
     
     private func getPageFromStartToEnd(startObjectKey: ID, byKeyPath: String, pageSize: Int) -> [T]? {
         guard let startItem = getOne(startObjectKey),
-              let firstItem = getFirst() else {
+              let firstItem = first else {
             Log.tag(.DB).tag(.PAGING).e("not found start item")
             return nil
         }
-        let results = getAll().sorted(byKeyPath: byKeyPath, ascending: true)
+        let results = all.sorted(byKeyPath: byKeyPath, ascending: true)
         guard var startIdx = results.firstIndex(of: startItem) else {
             Log.tag(.DB).tag(.PAGING).e("not found start item index")
             return nil
@@ -136,12 +118,12 @@ class RealmRepository<T: Object, ID> {
     
     private func getPageFromEndToStart(startObjectKey: ID, byKeyPath: String, pageSize: Int) -> [T]? {
         guard let endItem = getOne(startObjectKey),
-              let lastItem = getLast() else {
+              let lastItem = last else {
             Log.tag(.DB).tag(.PAGING).e("not found end item")
             return nil
         }
         
-        let results = getAll().sorted(byKeyPath: byKeyPath, ascending: false)
+        let results = all.sorted(byKeyPath: byKeyPath, ascending: false)
         
         guard var startIdx = results.firstIndex(of: endItem) else {
             Log.tag(.DB).tag(.PAGING).e("not found start item index")

@@ -19,7 +19,7 @@ class ItemRepository: RealmRepository<Item, String> {
     
     func autoAdd() {
         var number = 0
-        if let last = getAll().last {
+        if let last = last {
             number = last.number
         }
         number += 1
@@ -33,8 +33,7 @@ class ItemRepository: RealmRepository<Item, String> {
     }
     
     func printAll() {
-        let list = getAll()
-        for item in list {
+        for item in all {
             Log.tag(.DB).tag(.SELECT).d(item.toDto().description)
         }
     }

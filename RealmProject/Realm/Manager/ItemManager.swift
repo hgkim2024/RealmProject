@@ -22,7 +22,7 @@ class ItemManager {
     var insertTokenWorker: RealmTokenWorker<Item>?
     
     private init() {
-        insertTokenWorker = RealmTokenWorker({ ItemRepository.shared.getAll() }) { changes in
+        insertTokenWorker = RealmTokenWorker({ ItemRepository.shared.all }) { changes in
             switch changes {
                 
             case .initial(_):
@@ -52,7 +52,7 @@ class ItemManager {
     func testPaging() {
         
         // MARK: - Item Data 생성
-        let realmItemSize = ItemRepository.shared.getAllCount()
+        let realmItemSize = ItemRepository.shared.allCount
         if realmItemSize == 0 || realmItemSize > createSize {
             ItemRepository.shared.deleteAll()
             ItemRepository.shared.autoAdd(createSize)
@@ -67,7 +67,7 @@ class ItemManager {
     
     // MARK: - Pasination Code
     func printPagingFromStartToEnd() {
-        if let firstItem = ItemRepository.shared.getFirst(),
+        if let firstItem = ItemRepository.shared.first,
            var dtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
             
             var i = 0
@@ -93,7 +93,7 @@ class ItemManager {
     }
     
     func printPagingFromEndToStart() {
-        if let lastItem = ItemRepository.shared.getLast(),
+        if let lastItem = ItemRepository.shared.last,
            var dtos = ItemRepository.shared.pagingFromEndToStart(endItemDto: lastItem.toDto()) {
             
             var i = 0
