@@ -10,7 +10,7 @@ import Foundation
 class ItemDto: NSObject {
     
     let key: String
-    let number: Int
+    var number: Int
     
     init(_ item: Item) {
         self.key = item.key
@@ -20,4 +20,13 @@ class ItemDto: NSObject {
     public override var description: String {
         return "number: \(number), key: \(key)"
     }
+    
+    // : Update 용도
+    func toRealm() -> Item {
+        let item = Item()
+        item.key = key
+        item.number = number
+        return item
+    }
+    
 }

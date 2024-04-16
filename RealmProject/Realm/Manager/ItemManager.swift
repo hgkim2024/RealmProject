@@ -34,7 +34,13 @@ class ItemManager {
                     for i in insertions.indices { // : 아래 처럼 접근해야 insert 된 순서대로 접근할 수 있다.
                         Log.tag(.DB).tag(.ADD).d("number: \(items[insertions.count - i - 1].number)")
                         // : 다른 곳에 Event 전달이 필요하다면 여기서 전달하자
-//                        Log.tag(.DB).tag(.ADD).d("insertions: \(insertions.count)")
+                    }
+                }
+                
+                if !modifications.isEmpty {
+                    let items = results.sorted(byKeyPath: "number", ascending: false)
+                    for i in modifications.indices {
+                        Log.tag(.DB).tag(.UPDATE).d("number: \(items[modifications.count - i - 1].number)")
                     }
                 }
             case .error(_):
@@ -46,6 +52,18 @@ class ItemManager {
     
     deinit {
         insertTokenWorker = nil
+    }
+    
+    // MARK: - Update Test Code
+    func testUpdate() {
+        let createSize = 10
+        ItemRepository.shared.deleteAll()
+        ItemRepository.shared.autoAdd(createSize)
+        let itemDtos = ItemRepository.shared.all.sorted(by: { $0.number < $1.number }).map({ $0.toDto() })
+        for itemDto in itemDtos {
+            itemDto.number += 10
+            ItemRepository.shared.add(itemDto.toRealm())
+        }
     }
     
     // MARK: - Pasination Test Code
