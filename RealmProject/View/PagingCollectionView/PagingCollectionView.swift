@@ -76,7 +76,6 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         forItemAt indexPath: IndexPath
     ) {
         if indexPath.row == 0 {
-            // TODO: - add paging items
             // TODO: - add progress bar cell
             Log.tag(.PAGING).d("Top")
             if items.isEmpty { return }
@@ -86,7 +85,6 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
             items = pagingItems + items
             reloadData()
         } else if indexPath.row >= items.count - 1 {
-            // TODO: - add paging items
             // TODO: - add progress bar cell
             Log.tag(.PAGING).d("Bottom")
             if items.isEmpty { return }
