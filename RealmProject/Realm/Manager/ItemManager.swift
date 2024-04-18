@@ -144,6 +144,10 @@ class ItemManager {
             
             if startItem == nil {
                 startItem = itemRepository.first?.toDto()
+            } else {
+                if startItem!.isEqual(itemRepository.first?.toDto()) {
+                    return []
+                }
             }
             
             guard let startItem else { return [] }
@@ -158,6 +162,10 @@ class ItemManager {
             
             if endItem == nil {
                 endItem = itemRepository.last?.toDto()
+            } else {
+                if endItem!.isEqual(itemRepository.last?.toDto()) {
+                    return []
+                }
             }
             
             guard let endItem else { return [] }

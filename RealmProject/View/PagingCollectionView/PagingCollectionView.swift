@@ -16,7 +16,7 @@ enum PagingPosition {
 
 class PagingCollectionView: UICollectionView {
     
-    let items: [ItemDto]
+    var items: [ItemDto]
     
     init() {
         items = ItemManager.shared.getCollectionViewPagingItem(position: .TOP)
@@ -77,10 +77,24 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     ) {
         if indexPath.row == 0 {
             // TODO: - add paging items
+            // TODO: - add progress bar cell
             Log.tag(.PAGING).d("Top")
+            if items.isEmpty { return }
+            let startItem = items[0]
+            let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .BOTTOM, criteriaItem: startItem)
+            if pagingItems.isEmpty { return }
+            items = pagingItems + items
+            reloadData()
         } else if indexPath.row >= items.count - 1 {
             // TODO: - add paging items
+            // TODO: - add progress bar cell
             Log.tag(.PAGING).d("Bottom")
+            if items.isEmpty { return }
+            let endItem = items[items.count - 1]
+            let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .TOP, criteriaItem: endItem)
+            if pagingItems.isEmpty { return }
+            items = items + pagingItems
+            reloadData()
         }
     }
     
