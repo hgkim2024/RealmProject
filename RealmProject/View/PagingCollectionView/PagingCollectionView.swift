@@ -67,6 +67,21 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         let size = collectionView.bounds.size
         return CGSize(width: size.width, height: 30.0)
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        if indexPath.row == 0 {
+            // TODO: - add paging items
+            Log.tag(.PAGING).d("Top")
+        } else if indexPath.row >= items.count - 1 {
+            // TODO: - add paging items
+            Log.tag(.PAGING).d("Bottom")
+        }
+    }
+    
 }
 
 
