@@ -59,6 +59,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
     
+    // : Cell Size
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -68,6 +69,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         return CGSize(width: size.width, height: 30.0)
     }
     
+    // : Paging
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
