@@ -137,6 +137,13 @@ class ItemManager {
     }
     
     func getCollectionViewPagingItem(position: PagingPosition, criteriaItem: ItemDto? = nil) -> [ItemDto] {
+        
+        if criteriaItem == nil {
+            let createSize = 300
+            itemRepository.deleteAll()
+            itemRepository.autoAdd(createSize)
+        }
+        
         switch position {
             
         case .TOP:
@@ -169,7 +176,7 @@ class ItemManager {
             }
             
             guard let endItem else { return [] }
-            guard let itemDtos = itemRepository.pagingFromEndToStart(endItemDto: endItem) else {
+            guard let itemDtos = itemRepository.pagingFromEndToStart(endItemDto: endItem)?.sorted(by: { $0.number < $1.number }) else {
                 return []
             }
             

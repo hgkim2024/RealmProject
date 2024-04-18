@@ -11,13 +11,8 @@ class ViewController: UIViewController {
 
     let collectionView = PagingCollectionView()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        // MARK: - Paging Test Code
-//        ItemManager.shared.testPaging()
-//        ItemManager.shared.testUpdate()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
@@ -28,7 +23,19 @@ class ViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
-        collectionView.reloadData()
+        
+        collectionView.scrollToBottom()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+        // MARK: - Paging Test Code
+//        ItemManager.shared.testPaging()
+//        ItemManager.shared.testUpdate()
+        
+        collectionView.scrollToBottom()
     }
 }
 

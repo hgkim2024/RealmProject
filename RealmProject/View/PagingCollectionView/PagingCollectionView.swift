@@ -16,10 +16,13 @@ enum PagingPosition {
 
 class PagingCollectionView: UICollectionView {
     
+    let pagingPosition: PagingPosition = .BOTTOM
     var items: [ItemDto]
+    var applyWillDisplayFlag: Bool
     
     init() {
-        items = ItemManager.shared.getCollectionViewPagingItem(position: .TOP)
+        applyWillDisplayFlag = pagingPosition != .BOTTOM
+        items = ItemManager.shared.getCollectionViewPagingItem(position: pagingPosition)
         
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
@@ -39,6 +42,23 @@ class PagingCollectionView: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func scrollToBottom() {
+        guard numberOfSections > 0 else {
+            return
+        }
+        
+        let lastSection = numberOfSections - 1
+        guard numberOfItems(inSection: lastSection) > 0 else {
+            return
+        }
+        
+        let lastItemIndexPath = IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
+        scrollToItem(at: lastItemIndexPath, at: .bottom, animated: false)
+        
+//        if !applyWillDisplayFlag {
+//            applyWillDisplayFlag = true
+//        }
+    }
 }
 
 extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -75,6 +95,8 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
+        if !applyWillDisplayFlag { return }
+        
         if indexPath.row == 0 {
             // TODO: - add progress bar cell
             Log.tag(.PAGING).d("Top")
