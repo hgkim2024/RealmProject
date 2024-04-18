@@ -10,19 +10,18 @@ import RealmSwift
 
 // MARK: - Item Manager - Repository 에서 읽어온 데이터를 처리하는(비지니스) 로직이 담긴 클래스
 class ItemManager {
-    static let shared = ItemManager()
+    static let shared = ItemManager(itemRepository: ItemRepository.shared)
     
-    // MARK: - n 개 데이터가 있을 때 Paging Test
-    let createSize = 100000
-    
-    // MARK: - k 번 페이징 반복
-    let printCount = 30
+    // MARK: - Item Repository
+    let itemRepository: ItemRepository
     
     // MARK: - Notification Token: Received Realm Change Event
     var insertTokenWorker: RealmTokenWorker<Item>?
     
-    private init() {
-        insertTokenWorker = RealmTokenWorker({ ItemRepository.shared.all }) { changes in
+    private init(itemRepository: ItemRepository) {
+        self.itemRepository = itemRepository
+        
+        insertTokenWorker = RealmTokenWorker({ itemRepository.all }) { changes in
             switch changes {
                 
             case .initial(_):
@@ -57,36 +56,37 @@ class ItemManager {
     // MARK: - Update Test Code
     func testUpdate() {
         let createSize = 10
-        ItemRepository.shared.deleteAll()
-        ItemRepository.shared.autoAdd(createSize)
-        let itemDtos = ItemRepository.shared.all.sorted(by: { $0.number < $1.number }).map({ $0.toDto() })
+        itemRepository.deleteAll()
+        itemRepository.autoAdd(createSize)
+        let itemDtos = itemRepository.all.sorted(by: { $0.number < $1.number }).map({ $0.toDto() })
         for itemDto in itemDtos {
             itemDto.number += 10
-            ItemRepository.shared.add(itemDto.toRealm())
+            itemRepository.add(itemDto.toRealm())
         }
     }
     
     // MARK: - Pasination Test Code
     func testPaging() {
-        
         // MARK: - Item Data 생성
-        let realmItemSize = ItemRepository.shared.allCount
+        let createSize = 10000
+        let realmItemSize = itemRepository.allCount
         if realmItemSize == 0 || realmItemSize > createSize {
-            ItemRepository.shared.deleteAll()
-            ItemRepository.shared.autoAdd(createSize)
+            itemRepository.deleteAll()
+            itemRepository.autoAdd(createSize)
         } else if realmItemSize < createSize {
-            ItemRepository.shared.autoAdd(createSize - realmItemSize)
+            itemRepository.autoAdd(createSize - realmItemSize)
         }
         
         // MARK: - Paging
-//        printPagingFromStartToEnd()
-        printPagingFromEndToStart()
+        let printCount = 200
+//        printPagingFromStartToEnd(printCount: printCount)
+        printPagingFromEndToStart(printCount: printCount)
     }
     
     // MARK: - Pasination Code
-    func printPagingFromStartToEnd() {
-        if let firstItem = ItemRepository.shared.first,
-           var dtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
+    func printPagingFromStartToEnd(printCount: Int) {
+        if let firstItem = itemRepository.first,
+           var dtos = itemRepository.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
             
             var i = 0
             while true {
@@ -95,7 +95,7 @@ class ItemManager {
                 }
                 
                 if let lastItem = dtos.last {
-                    let pageDtos = ItemRepository.shared.pagingFromStartToEnd(startItemDto: lastItem) ?? []
+                    let pageDtos = itemRepository.pagingFromStartToEnd(startItemDto: lastItem) ?? []
                     if pageDtos.isEmpty == true {
                         break
                     }
@@ -106,13 +106,13 @@ class ItemManager {
                 i += 1
             }
             
-//            ItemRepository.shared.printDtos(dtos)
+//            itemRepository.printDtos(dtos)
         }
     }
     
-    func printPagingFromEndToStart() {
-        if let lastItem = ItemRepository.shared.last,
-           var dtos = ItemRepository.shared.pagingFromEndToStart(endItemDto: lastItem.toDto()) {
+    func printPagingFromEndToStart(printCount: Int) {
+        if let lastItem = itemRepository.last,
+           var dtos = itemRepository.pagingFromEndToStart(endItemDto: lastItem.toDto()) {
             
             var i = 0
             while true {
@@ -121,7 +121,7 @@ class ItemManager {
                 }
                 
                 if let firstItem = dtos.last {
-                    let pageDtos = ItemRepository.shared.pagingFromEndToStart(endItemDto: firstItem) ?? []
+                    let pageDtos = itemRepository.pagingFromEndToStart(endItemDto: firstItem) ?? []
                     if pageDtos.isEmpty == true {
                         break
                     }
@@ -132,7 +132,33 @@ class ItemManager {
                 i += 1
             }
             
-//            ItemRepository.shared.printDtos(dtos)
+//            itemRepository.printDtos(dtos)
+        }
+    }
+    
+    func getCollectionViewPagingItem(position: PagingPosition, criteriaItem: ItemDto) -> [ItemDto] {
+        switch position {
+            
+        case .TOP:
+            guard let itemDtos = itemRepository.pagingFromStartToEnd(startItemDto: criteriaItem) else {
+                return []
+            }
+            
+            return itemDtos
+            
+        case .BOTTOM:
+            guard let itemDtos = itemRepository.pagingFromEndToStart(endItemDto: criteriaItem) else {
+                return []
+            }
+            
+            return itemDtos
+            
+        case .CENTER:
+            guard let itemDtos = itemRepository.pagingCenter(criteriaItem: criteriaItem) else {
+                return []
+            }
+            
+            return itemDtos
         }
     }
 }

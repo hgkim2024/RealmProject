@@ -21,6 +21,9 @@
 		52E080752BC783C3008F4F11 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080742BC783C3008F4F11 /* ItemManager.swift */; };
 		52E080782BC7C6FF008F4F11 /* RealmBackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080772BC7C6FF008F4F11 /* RealmBackgroundWorker.swift */; };
 		52E0807A2BC7C7FA008F4F11 /* RealmTokenWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */; };
+		52E9D1CC2BD09FC200E56D7D /* UICollectionViewCell + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E9D1CB2BD09FC200E56D7D /* UICollectionViewCell + Extension.swift */; };
+		52E9D1CF2BD0A12700E56D7D /* PagingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E9D1CE2BD0A12700E56D7D /* PagingCollectionView.swift */; };
+		52E9D1D22BD0A4DA00E56D7D /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E9D1D12BD0A4DA00E56D7D /* PagingCollectionViewCell.swift */; };
 		AE8EE74D85ADB7CD6FCDD3BB /* Pods_RealmProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5313B94ED6C20E096D0279 /* Pods_RealmProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +44,9 @@
 		52E080742BC783C3008F4F11 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
 		52E080772BC7C6FF008F4F11 /* RealmBackgroundWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBackgroundWorker.swift; sourceTree = "<group>"; };
 		52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTokenWorker.swift; sourceTree = "<group>"; };
+		52E9D1CB2BD09FC200E56D7D /* UICollectionViewCell + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell + Extension.swift"; sourceTree = "<group>"; };
+		52E9D1CE2BD0A12700E56D7D /* PagingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionView.swift; sourceTree = "<group>"; };
+		52E9D1D12BD0A4DA00E56D7D /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
 		60910AE18980DE0BC6F23BC3 /* Pods-RealmProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmProject.release.xcconfig"; path = "Target Support Files/Pods-RealmProject/Pods-RealmProject.release.xcconfig"; sourceTree = "<group>"; };
 		AB5313B94ED6C20E096D0279 /* Pods_RealmProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F54ADCF6D27EE9E13135B2F2 /* Pods-RealmProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmProject.debug.xcconfig"; path = "Target Support Files/Pods-RealmProject/Pods-RealmProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -87,6 +93,8 @@
 		523B1A4A2BC4C06A007A6F7E /* RealmProject */ = {
 			isa = PBXGroup;
 			children = (
+				52E9D1CD2BD0A11900E56D7D /* View */,
+				52E9D1CA2BD09FA900E56D7D /* Extension */,
 				52AE49AD2BC4D3050077D8AF /* Log */,
 				52AE49A82BC4D00A0077D8AF /* Realm */,
 				523B1A4B2BC4C06A007A6F7E /* AppDelegate.swift */,
@@ -160,6 +168,31 @@
 				52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */,
 			);
 			path = Worker;
+			sourceTree = "<group>";
+		};
+		52E9D1CA2BD09FA900E56D7D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				52E9D1CB2BD09FC200E56D7D /* UICollectionViewCell + Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		52E9D1CD2BD0A11900E56D7D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				52E9D1D02BD0A1EB00E56D7D /* PagingCollectionView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		52E9D1D02BD0A1EB00E56D7D /* PagingCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				52E9D1CE2BD0A12700E56D7D /* PagingCollectionView.swift */,
+				52E9D1D12BD0A4DA00E56D7D /* PagingCollectionViewCell.swift */,
+			);
+			path = PagingCollectionView;
 			sourceTree = "<group>";
 		};
 		DA8EC8EADFB35DA18FD3FB98 /* Pods */ = {
@@ -292,10 +325,13 @@
 				52AE49AF2BC4D30C0077D8AF /* Log.swift in Sources */,
 				52E080752BC783C3008F4F11 /* ItemManager.swift in Sources */,
 				52AE49B42BC4E1950077D8AF /* Item.swift in Sources */,
+				52E9D1D22BD0A4DA00E56D7D /* PagingCollectionViewCell.swift in Sources */,
+				52E9D1CC2BD09FC200E56D7D /* UICollectionViewCell + Extension.swift in Sources */,
 				523B1A4C2BC4C06A007A6F7E /* AppDelegate.swift in Sources */,
 				523B1A4E2BC4C06A007A6F7E /* SceneDelegate.swift in Sources */,
 				52AE49BE2BC4FE540077D8AF /* ItemDto.swift in Sources */,
 				52AE49B62BC4F8790077D8AF /* ItemRepository.swift in Sources */,
+				52E9D1CF2BD0A12700E56D7D /* PagingCollectionView.swift in Sources */,
 				52E080782BC7C6FF008F4F11 /* RealmBackgroundWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -58,6 +58,11 @@ class ItemRepository: RealmRepository<Item, String> {
         return itemDtos
     }
     
+    func pagingCenter(criteriaItem: ItemDto) -> [ItemDto]? {
+        // TODO: - 개발
+        return nil
+    }
+    
     func printDtos(_ itemDtos: [ItemDto]) {
         for index in itemDtos.indices {
             let itemDto = itemDtos[index]
