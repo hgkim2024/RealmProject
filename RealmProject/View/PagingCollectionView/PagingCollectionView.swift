@@ -16,7 +16,11 @@ enum PagingPosition {
 
 class PagingCollectionView: UICollectionView {
     
+    let items: [ItemDto]
+    
     init() {
+        items = ItemManager.shared.getCollectionViewPagingItem(position: .TOP)
+        
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
@@ -27,6 +31,8 @@ class PagingCollectionView: UICollectionView {
         delegate = self
         dataSource = self
         backgroundColor = .clear
+        
+        register(PagingCollectionViewCell.self, forCellWithReuseIdentifier: PagingCollectionViewCell.identifier)
     }
     
     required init?(coder: NSCoder) {
@@ -41,16 +47,16 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        // TODO: - 개발
-        return 0
+        return items.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        // TODO: - 개발
-        return UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.identifier, for: indexPath) as! PagingCollectionViewCell
+        cell.setItem(item: items[indexPath.row])
+        return cell
     }
     
     func collectionView(

@@ -136,29 +136,46 @@ class ItemManager {
         }
     }
     
-    func getCollectionViewPagingItem(position: PagingPosition, criteriaItem: ItemDto) -> [ItemDto] {
+    func getCollectionViewPagingItem(position: PagingPosition, criteriaItem: ItemDto? = nil) -> [ItemDto] {
         switch position {
             
         case .TOP:
-            guard let itemDtos = itemRepository.pagingFromStartToEnd(startItemDto: criteriaItem) else {
+            var startItem = criteriaItem
+            
+            if startItem == nil {
+                startItem = itemRepository.first?.toDto()
+            }
+            
+            guard let startItem else { return [] }
+            guard let itemDtos = itemRepository.pagingFromStartToEnd(startItemDto: startItem) else {
                 return []
             }
             
             return itemDtos
             
         case .BOTTOM:
-            guard let itemDtos = itemRepository.pagingFromEndToStart(endItemDto: criteriaItem) else {
+            var endItem = criteriaItem
+            
+            if endItem == nil {
+                endItem = itemRepository.last?.toDto()
+            }
+            
+            guard let endItem else { return [] }
+            guard let itemDtos = itemRepository.pagingFromEndToStart(endItemDto: endItem) else {
                 return []
             }
             
             return itemDtos
             
         case .CENTER:
-            guard let itemDtos = itemRepository.pagingCenter(criteriaItem: criteriaItem) else {
-                return []
-            }
             
-            return itemDtos
+            // TODO: - 개발
+            return []
+//            guard let itemDtos = itemRepository.pagingCenter(criteriaItem: criteriaItem) else {
+//                return []
+//            }
+//            
+//            return itemDtos
         }
     }
 }
