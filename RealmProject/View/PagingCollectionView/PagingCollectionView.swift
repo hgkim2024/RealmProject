@@ -16,7 +16,7 @@ enum PagingPosition {
 
 class PagingCollectionView: UICollectionView {
     
-    let pagingPosition: PagingPosition = .BOTTOM
+    let pagingPosition: PagingPosition = .TOP
     var items: [ItemDto]
     var applyWillDisplayFlag: Bool
     
