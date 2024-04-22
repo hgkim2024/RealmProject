@@ -25,19 +25,19 @@ class PagingCollectionViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
         
-        collectionView.scrollToBottom()
+//        collectionView.scrollToBottom()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        collectionView.scrollToBottom()
+//        collectionView.scrollToBottom()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        collectionView.scrollToBottom()
+//        collectionView.scrollToBottom()
     }
     
 }
