@@ -68,17 +68,12 @@ class ItemManager {
     // MARK: - Pasination Test Code
     func testPaging() {
         // MARK: - Item Data 생성
-        let createSize = 10000
-        let realmItemSize = itemRepository.allCount
-        if realmItemSize == 0 || realmItemSize > createSize {
-            itemRepository.deleteAll()
-            itemRepository.autoAdd(createSize)
-        } else if realmItemSize < createSize {
-            itemRepository.autoAdd(createSize - realmItemSize)
-        }
+        let createSize = 1000
+        itemRepository.deleteAll()
+        itemRepository.autoAdd(createSize)
         
         // MARK: - Paging
-        let printCount = 200
+        let printCount = 20
 //        printPagingFromStartToEnd(printCount: printCount)
         printPagingFromEndToStart(printCount: printCount)
     }
@@ -136,14 +131,14 @@ class ItemManager {
         }
     }
     
+    func initCollectionViewPagingItem() {
+        let createSize = 300
+        itemRepository.deleteAll()
+        itemRepository.autoAdd(createSize)
+    }
+    
     func getCollectionViewPagingItem(position: PagingPosition, criteriaItem: ItemDto? = nil) -> [ItemDto] {
-        
-        if criteriaItem == nil {
-            let createSize = 300
-            itemRepository.deleteAll()
-            itemRepository.autoAdd(createSize)
-        }
-        
+    
         switch position {
             
         case .TOP:

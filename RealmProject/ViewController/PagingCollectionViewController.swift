@@ -1,19 +1,20 @@
 //
-//  ViewController.swift
+//  PagingCollectionViewController.swift
 //  RealmProject
 //
-//  Created by 김현구 on 4/9/24.
+//  Created by 김현구 on 4/22/24.
 //
 
+import Foundation
 import UIKit
 
-class ViewController: UIViewController {
-
+class PagingCollectionViewController: UIViewController {
     let collectionView = PagingCollectionView()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        view.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
         
@@ -27,15 +28,16 @@ class ViewController: UIViewController {
         collectionView.scrollToBottom()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        // MARK: - Paging Test Code
-//        ItemManager.shared.testPaging()
-//        ItemManager.shared.testUpdate()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         collectionView.scrollToBottom()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        collectionView.scrollToBottom()
+    }
+    
 }
-

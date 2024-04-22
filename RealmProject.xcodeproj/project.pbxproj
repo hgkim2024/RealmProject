@@ -10,14 +10,17 @@
 		523B1A4C2BC4C06A007A6F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1A4B2BC4C06A007A6F7E /* AppDelegate.swift */; };
 		523B1A4E2BC4C06A007A6F7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1A4D2BC4C06A007A6F7E /* SceneDelegate.swift */; };
 		523B1A502BC4C06A007A6F7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1A4F2BC4C06A007A6F7E /* ViewController.swift */; };
-		523B1A532BC4C06A007A6F7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523B1A512BC4C06A007A6F7E /* Main.storyboard */; };
+		523B1A532BC4C06A007A6F7E /* ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523B1A512BC4C06A007A6F7E /* ViewController.storyboard */; };
 		523B1A552BC4C06B007A6F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 523B1A542BC4C06B007A6F7E /* Assets.xcassets */; };
 		523B1A582BC4C06B007A6F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523B1A562BC4C06B007A6F7E /* LaunchScreen.storyboard */; };
+		525A99292BD649D600BC96AF /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A99282BD649D600BC96AF /* UIButton + Extension.swift */; };
+		525A992B2BD64BC200BC96AF /* RxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A992A2BD64BC200BC96AF /* RxViewController.swift */; };
 		52AE49AA2BC4D03F0077D8AF /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49A92BC4D03F0077D8AF /* RealmRepository.swift */; };
 		52AE49AF2BC4D30C0077D8AF /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49AE2BC4D30C0077D8AF /* Log.swift */; };
 		52AE49B42BC4E1950077D8AF /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49B32BC4E1950077D8AF /* Item.swift */; };
 		52AE49B62BC4F8790077D8AF /* ItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49B52BC4F8790077D8AF /* ItemRepository.swift */; };
 		52AE49BE2BC4FE540077D8AF /* ItemDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE49BD2BC4FE540077D8AF /* ItemDto.swift */; };
+		52DCA8242BD646B300F9E0E7 /* PagingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DCA8232BD646B300F9E0E7 /* PagingCollectionViewController.swift */; };
 		52E080752BC783C3008F4F11 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080742BC783C3008F4F11 /* ItemManager.swift */; };
 		52E080782BC7C6FF008F4F11 /* RealmBackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080772BC7C6FF008F4F11 /* RealmBackgroundWorker.swift */; };
 		52E0807A2BC7C7FA008F4F11 /* RealmTokenWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */; };
@@ -32,15 +35,18 @@
 		523B1A4B2BC4C06A007A6F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		523B1A4D2BC4C06A007A6F7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		523B1A4F2BC4C06A007A6F7E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		523B1A522BC4C06A007A6F7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		523B1A522BC4C06A007A6F7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ViewController.storyboard; sourceTree = "<group>"; };
 		523B1A542BC4C06B007A6F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		523B1A572BC4C06B007A6F7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		523B1A592BC4C06B007A6F7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		525A99282BD649D600BC96AF /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
+		525A992A2BD64BC200BC96AF /* RxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxViewController.swift; sourceTree = "<group>"; };
 		52AE49A92BC4D03F0077D8AF /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		52AE49AE2BC4D30C0077D8AF /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		52AE49B32BC4E1950077D8AF /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		52AE49B52BC4F8790077D8AF /* ItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRepository.swift; sourceTree = "<group>"; };
 		52AE49BD2BC4FE540077D8AF /* ItemDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDto.swift; sourceTree = "<group>"; };
+		52DCA8232BD646B300F9E0E7 /* PagingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewController.swift; sourceTree = "<group>"; };
 		52E080742BC783C3008F4F11 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
 		52E080772BC7C6FF008F4F11 /* RealmBackgroundWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBackgroundWorker.swift; sourceTree = "<group>"; };
 		52E080792BC7C7FA008F4F11 /* RealmTokenWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTokenWorker.swift; sourceTree = "<group>"; };
@@ -93,14 +99,13 @@
 		523B1A4A2BC4C06A007A6F7E /* RealmProject */ = {
 			isa = PBXGroup;
 			children = (
+				52DCA8202BD6466300F9E0E7 /* ViewController */,
 				52E9D1CD2BD0A11900E56D7D /* View */,
 				52E9D1CA2BD09FA900E56D7D /* Extension */,
 				52AE49AD2BC4D3050077D8AF /* Log */,
 				52AE49A82BC4D00A0077D8AF /* Realm */,
 				523B1A4B2BC4C06A007A6F7E /* AppDelegate.swift */,
 				523B1A4D2BC4C06A007A6F7E /* SceneDelegate.swift */,
-				523B1A4F2BC4C06A007A6F7E /* ViewController.swift */,
-				523B1A512BC4C06A007A6F7E /* Main.storyboard */,
 				523B1A542BC4C06B007A6F7E /* Assets.xcassets */,
 				523B1A562BC4C06B007A6F7E /* LaunchScreen.storyboard */,
 				523B1A592BC4C06B007A6F7E /* Info.plist */,
@@ -153,6 +158,17 @@
 			path = Item;
 			sourceTree = "<group>";
 		};
+		52DCA8202BD6466300F9E0E7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				523B1A4F2BC4C06A007A6F7E /* ViewController.swift */,
+				523B1A512BC4C06A007A6F7E /* ViewController.storyboard */,
+				52DCA8232BD646B300F9E0E7 /* PagingCollectionViewController.swift */,
+				525A992A2BD64BC200BC96AF /* RxViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		52E080732BC783B8008F4F11 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				52E9D1CB2BD09FC200E56D7D /* UICollectionViewCell + Extension.swift */,
+				525A99282BD649D600BC96AF /* UIButton + Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -266,7 +283,7 @@
 			files = (
 				523B1A582BC4C06B007A6F7E /* LaunchScreen.storyboard in Resources */,
 				523B1A552BC4C06B007A6F7E /* Assets.xcassets in Resources */,
-				523B1A532BC4C06A007A6F7E /* Main.storyboard in Resources */,
+				523B1A532BC4C06A007A6F7E /* ViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,10 +338,13 @@
 			files = (
 				52AE49AA2BC4D03F0077D8AF /* RealmRepository.swift in Sources */,
 				52E0807A2BC7C7FA008F4F11 /* RealmTokenWorker.swift in Sources */,
+				52DCA8242BD646B300F9E0E7 /* PagingCollectionViewController.swift in Sources */,
+				525A992B2BD64BC200BC96AF /* RxViewController.swift in Sources */,
 				523B1A502BC4C06A007A6F7E /* ViewController.swift in Sources */,
 				52AE49AF2BC4D30C0077D8AF /* Log.swift in Sources */,
 				52E080752BC783C3008F4F11 /* ItemManager.swift in Sources */,
 				52AE49B42BC4E1950077D8AF /* Item.swift in Sources */,
+				525A99292BD649D600BC96AF /* UIButton + Extension.swift in Sources */,
 				52E9D1D22BD0A4DA00E56D7D /* PagingCollectionViewCell.swift in Sources */,
 				52E9D1CC2BD09FC200E56D7D /* UICollectionViewCell + Extension.swift in Sources */,
 				523B1A4C2BC4C06A007A6F7E /* AppDelegate.swift in Sources */,
@@ -339,12 +359,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		523B1A512BC4C06A007A6F7E /* Main.storyboard */ = {
+		523B1A512BC4C06A007A6F7E /* ViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				523B1A522BC4C06A007A6F7E /* Base */,
 			);
-			name = Main.storyboard;
+			name = ViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		523B1A562BC4C06B007A6F7E /* LaunchScreen.storyboard */ = {
