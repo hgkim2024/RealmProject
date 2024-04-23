@@ -59,11 +59,6 @@ class PagingCollectionView: UICollectionView {
             applyWillDisplayFlag = true
         }
     }
-    
-    func scrollToItem(item: ItemDto) {
-        guard let index = items.firstIndex(of: item) else { return }
-        scrollToItem(at: IndexPath(row: index, section: 0), at: .top, animated: false)
-    }
 }
 
 extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -138,11 +133,3 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
 }
-
-
-// : Step 1
-// TODO: - add Cell
-// TODO: - add Realm Data
-
-// : Step 2
-// TODO: - add scroll event -> Paging

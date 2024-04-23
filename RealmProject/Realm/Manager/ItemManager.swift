@@ -71,25 +71,25 @@ class ItemManager {
     
     // MARK: - Pasination Test Code
     func testPaging() {
-        // MARK: - Item Data 생성
+        // : Item Data 생성
         let createSize = 1000
         itemRepository.deleteAll()
         itemRepository.autoAdd(createSize)
         
-        // MARK: - Paging
-        let printCount = 20
-//        printPagingFromStartToEnd(printCount: printCount)
-        printPagingFromEndToStart(printCount: printCount)
+        // : Paging
+        let pageCount = 20
+//        printPagingFromStartToEnd(pageCount: pageCount)
+        printPagingFromEndToStart(pageCount: pageCount)
     }
     
     // MARK: - Pasination Code
-    func printPagingFromStartToEnd(printCount: Int) {
+    func printPagingFromStartToEnd(pageCount: Int) {
         if let firstItem = itemRepository.first,
            var dtos = itemRepository.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
             
             var i = 0
             while true {
-                if i >= printCount - 1 {
+                if i >= pageCount - 1 {
                     break
                 }
                 
@@ -109,13 +109,13 @@ class ItemManager {
         }
     }
     
-    func printPagingFromEndToStart(printCount: Int) {
+    func printPagingFromEndToStart(pageCount: Int) {
         if let lastItem = itemRepository.last,
            var dtos = itemRepository.pagingFromEndToStart(endItemDto: lastItem.toDto()) {
             
             var i = 0
             while true {
-                if i >= printCount - 1 {
+                if i >= pageCount - 1 {
                     break
                 }
                 
