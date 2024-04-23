@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class PagingCollectionViewController: UIViewController {
-    let collectionView = PagingCollectionView()
+    let collectionView = PagingCollectionView(startPagingPosition: .BOTTOM)
     
     override func viewDidLoad() {
         super.viewDidLoad()

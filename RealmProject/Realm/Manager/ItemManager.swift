@@ -145,6 +145,7 @@ class ItemManager {
     
         switch position {
             
+        // : 채팅방 페이징
         case .TOP:
             var startItem = criteriaItem
             
@@ -163,6 +164,7 @@ class ItemManager {
             
             return itemDtos
             
+        // : 일반 게시글 페이징
         case .BOTTOM:
             var endItem = criteriaItem
             
@@ -180,7 +182,8 @@ class ItemManager {
             }
             
             return itemDtos
-            
+        
+        // : Search 페이징
         case .CENTER:
             
             // TODO: - 개발
