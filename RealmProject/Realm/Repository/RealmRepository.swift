@@ -12,26 +12,15 @@ import RealmSwift
 class RealmRepository<T: Object, ID> {
     
     // MARK: - CRUD
-    var first: T? {
-        return all.first
-    }
-    
-    var last: T? {
-        return all.last
-    }
-    
     var realm: Realm {
         // TODO: - 마이그레이션 코드 추가
         return try! Realm()
     }
     
-    var all: Results<T> {
-        return realm.objects(T.self)
-    }
-    
-    var allCount: Int {
-        return all.count
-    }
+    var first: T? { return all.first }
+    var last: T? { return all.last }
+    var all: Results<T> { return realm.objects(T.self) }
+    var allCount: Int { return all.count }
     
     func getOne(_ key: ID) -> T? {
         return realm.object(ofType: T.self, forPrimaryKey: key)
