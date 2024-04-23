@@ -12,22 +12,12 @@
 
 <br>
 
-### Realm Pagination Test Code
-- <code>ItemManager.testPaging()</code>
-- 테스트 절차
-    - n 개  데이터 생성
-    - 정렬된 n 개 데이터 에서 m 개 씩 읽어와 k 번 출력
-
-```Swift
-// MARK: - n 개 데이터가 있을 때
-let createSize = 100000
-
-// MARK: - n 개 데이터 생성
-ItemRepository.shared.autoAdd(createSize)
-
-// MARK: - test paging 
-printPagingFromStartToEnd()
-//        printPagingFromEndToStart()
+## CollectionView 와 Realm 을 이용한 Pagination 테스트
+- [CollectionView Paging 설명 글](https://www.notion.so/CollectionView-Paging-879f83aaa79c43c99262248db314984b?pvs=4)
+- PagingCollectionView 생성 시 startPagingPosition 을 top, bottom 으로 설정할 수 있다.
+- top 은 아래로 페이징(일반 게시글 페이징), bottom 은 위로 페이징(채팅방 페이징)이다.
+```swift
+let collectionView = PagingCollectionView(startPagingPosition: .BOTTOM)
 ```
 
 <br>
