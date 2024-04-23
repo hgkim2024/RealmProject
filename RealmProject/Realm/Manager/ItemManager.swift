@@ -18,6 +18,10 @@ class ItemManager {
     // MARK: - Notification Token: Received Realm Change Event
     var insertTokenWorker: RealmTokenWorker<Item>?
     
+    var countPerPage: Int {
+        return itemRepository.countPerPage
+    }
+    
     private init(itemRepository: ItemRepository) {
         self.itemRepository = itemRepository
         

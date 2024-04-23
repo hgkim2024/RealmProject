@@ -13,7 +13,7 @@ class ItemRepository: RealmRepository<Item, String> {
     static let shared = ItemRepository()
     
     // MARK: - 한 페이지에 데이터 갯수
-    let pageSize = 50
+    let countPerPage = 50
     
     private override init() { super.init() }
     
@@ -39,7 +39,7 @@ class ItemRepository: RealmRepository<Item, String> {
     }
     
     func pagingFromStartToEnd(startItemDto: ItemDto) -> [ItemDto]? {
-        guard let items = getPage(startObjectKey: startItemDto.key, byKeyPath: "number", ascending: true, pageSize: pageSize) else {
+        guard let items = getPage(startObjectKey: startItemDto.key, byKeyPath: "number", ascending: true, countPerPage: countPerPage) else {
             return nil
         }
         
@@ -49,7 +49,7 @@ class ItemRepository: RealmRepository<Item, String> {
     }
     
     func pagingFromEndToStart(endItemDto: ItemDto) -> [ItemDto]? {
-        guard let items = getPage(startObjectKey: endItemDto.key, byKeyPath: "number", ascending: false, pageSize: pageSize) else {
+        guard let items = getPage(startObjectKey: endItemDto.key, byKeyPath: "number", ascending: false, countPerPage: countPerPage) else {
             return nil
         }
         

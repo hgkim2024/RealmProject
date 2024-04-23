@@ -77,17 +77,17 @@ class RealmRepository<T: Object, ID> {
     }
     
     // MARK: - Pagination
-    func getPage(startObjectKey: ID, byKeyPath: String, ascending: Bool, pageSize: Int) -> [T]? {
+    func getPage(startObjectKey: ID, byKeyPath: String, ascending: Bool, countPerPage: Int) -> [T]? {
         
         if ascending {
-            return getPageFromStartToEnd(startObjectKey: startObjectKey, byKeyPath: byKeyPath, pageSize: pageSize)
+            return getPageFromStartToEnd(startObjectKey: startObjectKey, byKeyPath: byKeyPath, countPerPage: countPerPage)
         } else {
-            return getPageFromEndToStart(startObjectKey: startObjectKey, byKeyPath: byKeyPath, pageSize: pageSize)
+            return getPageFromEndToStart(startObjectKey: startObjectKey, byKeyPath: byKeyPath, countPerPage: countPerPage)
         }
 
     }
     
-    private func getPageFromStartToEnd(startObjectKey: ID, byKeyPath: String, pageSize: Int) -> [T]? {
+    private func getPageFromStartToEnd(startObjectKey: ID, byKeyPath: String, countPerPage: Int) -> [T]? {
         guard let startItem = getOne(startObjectKey),
               let firstItem = first else {
             Log.tag(.DB).tag(.PAGING).e("not found start item")
@@ -103,7 +103,7 @@ class RealmRepository<T: Object, ID> {
             startIdx += 1
         }
         
-        let endIdx = startIdx + pageSize
+        let endIdx = startIdx + countPerPage
         var items: [T] = []
         
         for item in results[max(0, startIdx) ..< min(endIdx, results.count)] {
@@ -113,7 +113,7 @@ class RealmRepository<T: Object, ID> {
         return items
     }
     
-    private func getPageFromEndToStart(startObjectKey: ID, byKeyPath: String, pageSize: Int) -> [T]? {
+    private func getPageFromEndToStart(startObjectKey: ID, byKeyPath: String, countPerPage: Int) -> [T]? {
         guard let endItem = getOne(startObjectKey),
               let lastItem = last else {
             Log.tag(.DB).tag(.PAGING).e("not found end item")
@@ -131,7 +131,7 @@ class RealmRepository<T: Object, ID> {
             startIdx += 1
         }
         
-        let endIdx = startIdx + pageSize
+        let endIdx = startIdx + countPerPage
         var items: [T] = []
         
         for item in results[max(0, startIdx) ..< min(endIdx, results.count)] {

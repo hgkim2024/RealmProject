@@ -16,13 +16,13 @@ enum PagingPosition {
 
 class PagingCollectionView: UICollectionView {
     
-    let pagingPosition: PagingPosition = .TOP
+    let startPagingPosition: PagingPosition = .BOTTOM
     var items: [ItemDto]
     var applyWillDisplayFlag: Bool
     
     init() {
-        applyWillDisplayFlag = pagingPosition != .BOTTOM
-        items = ItemManager.shared.getCollectionViewPagingItem(position: pagingPosition)
+        applyWillDisplayFlag = startPagingPosition != .BOTTOM
+        items = ItemManager.shared.getCollectionViewPagingItem(position: startPagingPosition)
         
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
@@ -55,9 +55,14 @@ class PagingCollectionView: UICollectionView {
         let lastItemIndexPath = IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
         scrollToItem(at: lastItemIndexPath, at: .bottom, animated: false)
         
-//        if !applyWillDisplayFlag {
-//            applyWillDisplayFlag = true
-//        }
+        if !applyWillDisplayFlag {
+            applyWillDisplayFlag = true
+        }
+    }
+    
+    func scrollToItem(item: ItemDto) {
+        guard let index = items.firstIndex(of: item) else { return }
+        scrollToItem(at: IndexPath(row: index, section: 0), at: .top, animated: false)
     }
 }
 
@@ -86,7 +91,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let size = collectionView.bounds.size
-        return CGSize(width: size.width, height: 30.0)
+        return CGSize(width: size.width, height: 45.0)
     }
     
     // : Paging
@@ -98,23 +103,37 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         if !applyWillDisplayFlag { return }
         
         if indexPath.row == 0 {
-            // TODO: - add progress bar cell
             Log.tag(.PAGING).d("Top")
             if items.isEmpty { return }
             let startItem = items[0]
             let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .BOTTOM, criteriaItem: startItem)
             if pagingItems.isEmpty { return }
             items = pagingItems + items
-            reloadData()
+            
+            var indexPaths: [IndexPath] = []
+            for i in 0..<ItemManager.shared.countPerPage {
+                indexPaths.append(IndexPath(row: i, section: 0))
+            }
+            performBatchUpdates {
+                insertItems(at: indexPaths)
+            }
         } else if indexPath.row >= items.count - 1 {
-            // TODO: - add progress bar cell
             Log.tag(.PAGING).d("Bottom")
             if items.isEmpty { return }
             let endItem = items[items.count - 1]
             let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .TOP, criteriaItem: endItem)
             if pagingItems.isEmpty { return }
             items = items + pagingItems
-            reloadData()
+            
+            var indexPaths: [IndexPath] = []
+            for item in pagingItems {
+                if let index = items.firstIndex(of: item) {
+                    indexPaths.append(IndexPath(row: index, section: 0))
+                }
+            }
+            performBatchUpdates {
+                insertItems(at: indexPaths)
+            }
         }
     }
     
