@@ -32,6 +32,7 @@ class PagingCollectionView: UICollectionView {
     var isSearchFlag = false
     let cellHeight: CGFloat = 45.0
     let scrollPreventHeight: CGFloat
+    var isNextUpPage: Bool = true
     
     init(startPagingPosition: PagingPosition) {
         self.startPagingPosition = startPagingPosition
@@ -81,6 +82,7 @@ class PagingCollectionView: UICollectionView {
     func searchItem(item: ItemDto?) {
         applyEndDisplayFlag = false
         isSearchFlag = true
+        isNextUpPage = true
         searchItem = item
         
         if let item {
@@ -152,6 +154,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .BOTTOM, criteriaItem: startItem)
         if pagingItems.isEmpty {
             applyEndDisplayFlag = true
+            isNextUpPage = false
             return
         }
         items = pagingItems + items
@@ -187,20 +190,19 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if !applyEndDisplayFlag && !initFlag && !isSearchFlag {
-            if scrollView.contentOffset.y <= scrollPreventHeight {
-                if lastContentOffset <= scrollPreventHeight {
-                    lastContentOffset = scrollPreventHeight
-                }
-                scrollView.contentOffset = CGPoint(x: 0, y: lastContentOffset)
-            }
-            return
-        }
         if scrollView.contentOffset.y > lastContentOffset {
             curScrollDirection = .DOWN
         } else if scrollView.contentOffset.y < lastContentOffset {
             curScrollDirection = .UP
+        }
+        
+        if !initFlag && !isSearchFlag && isNextUpPage
+        && scrollView.contentOffset.y <= scrollPreventHeight {
+            if lastContentOffset <= scrollPreventHeight {
+                lastContentOffset = scrollPreventHeight
+            }
+            scrollView.contentOffset = CGPoint(x: 0, y: lastContentOffset)
+            upPaging()
         }
         
         lastContentOffset = scrollView.contentOffset.y
