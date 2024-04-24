@@ -136,7 +136,7 @@ class ItemManager {
     }
     
     func initCollectionViewPagingItem() {
-        let createSize = 300
+        let createSize = 1000
         itemRepository.deleteAll()
         itemRepository.autoAdd(createSize)
     }

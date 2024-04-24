@@ -44,7 +44,7 @@ class PagingCollectionViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.hidesBackButton = true
+//        navigationItem.hidesBackButton = true
         
         if let searchBarTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             searchBarTextField.keyboardType = .numberPad
