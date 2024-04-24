@@ -70,6 +70,7 @@ class PagingCollectionView: UICollectionView {
         }
     }
     
+    // : Search - 검색 시 새로운 페이지로 로딩 -> 데이터가 많은 경우에 바로 로딩하기 위함
     func searchItem(item: ItemDto?) {
         applyEndDisplayFlag = false
         searchItem = item
