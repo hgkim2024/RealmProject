@@ -25,6 +25,8 @@ enum Tag: Int {
     case SUCCESS
     case FAIL
     
+    case SEARCH
+    
     
     // MARK: - NONE 태그
     case NONE

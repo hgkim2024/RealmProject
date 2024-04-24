@@ -29,8 +29,16 @@ class PagingCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func setItem(item: ItemDto) {
+    func setItem(item: ItemDto, searchItem: ItemDto?) {
         label.text = "\(item.number)"
+        
+        if item.isEqual(searchItem) {
+            label.textColor = .white
+            backgroundColor = .orange
+        } else {
+            label.textColor = .black
+            backgroundColor = .clear
+        }
     }
     
     required init?(coder: NSCoder) {

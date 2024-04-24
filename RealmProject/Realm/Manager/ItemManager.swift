@@ -185,14 +185,19 @@ class ItemManager {
         
         // : Search 페이징
         case .CENTER:
+            guard let criteriaItem else {
+                return []
+            }
             
-            // TODO: - 개발
-            return []
-//            guard let itemDtos = itemRepository.pagingCenter(criteriaItem: criteriaItem) else {
-//                return []
-//            }
-//            
-//            return itemDtos
+            guard let itemDtos = itemRepository.pagingFromCenter(centerItemDto: criteriaItem) else {
+                return []
+            }
+            
+            return itemDtos
         }
+    }
+    
+    func getItem(number: Int) -> ItemDto? {
+        return itemRepository.getItem(number: number)
     }
 }

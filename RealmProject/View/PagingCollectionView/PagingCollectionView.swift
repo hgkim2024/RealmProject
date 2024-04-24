@@ -27,6 +27,7 @@ class PagingCollectionView: UICollectionView {
     var applyEndDisplayFlag: Bool
     var lastContentOffset: CGFloat = 0
     var curScrollDirection: CollectionViewScrollDirection = .NONE
+    var searchItem: ItemDto? = nil
     
     init(startPagingPosition: PagingPosition) {
         self.startPagingPosition = startPagingPosition
@@ -68,6 +69,23 @@ class PagingCollectionView: UICollectionView {
             applyEndDisplayFlag = true
         }
     }
+    
+    func searchItem(item: ItemDto?) {
+        applyEndDisplayFlag = false
+        searchItem = item
+        
+        if let item {
+            items = ItemManager.shared.getCollectionViewPagingItem(position: .CENTER, criteriaItem: item)
+        }
+        
+        reloadData()
+        
+        if let item, let index = items.firstIndex(of: item) {
+            scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredVertically, animated: false)
+        }
+        
+        applyEndDisplayFlag = true
+    }
 }
 
 extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -84,7 +102,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.identifier, for: indexPath) as! PagingCollectionViewCell
-        cell.setItem(item: items[indexPath.row])
+        cell.setItem(item: items[indexPath.row], searchItem: searchItem)
         return cell
     }
     
@@ -119,18 +137,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
                 return
             }
             items = items + pagingItems
-            
-            var indexPaths: [IndexPath] = []
-            for item in pagingItems {
-                if let index = items.firstIndex(of: item) {
-                    indexPaths.append(IndexPath(row: index, section: 0))
-                }
-            }
-            performBatchUpdates {
-                insertItems(at: indexPaths)
-            } completion: { [weak self] _ in
-                self?.applyEndDisplayFlag = true
-            }
+            updateInsertItems(pagingItems: pagingItems)
         } else if indexPath.row <= ItemManager.shared.countPerPage - 1
                     && curScrollDirection == .UP {
             Log.tag(.PAGING).d("Top")
@@ -143,17 +150,21 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
                 return
             }
             items = pagingItems + items
-            
-            var indexPaths: [IndexPath] = []
-            for i in 0..<ItemManager.shared.countPerPage {
-                indexPaths.append(IndexPath(row: i, section: 0))
+            updateInsertItems(pagingItems: pagingItems)
+        }
+    }
+    
+    func updateInsertItems(pagingItems: [ItemDto]) {
+        var indexPaths: [IndexPath] = []
+        for item in pagingItems {
+            if let index = items.firstIndex(of: item) {
+                indexPaths.append(IndexPath(row: index, section: 0))
             }
-            
-            performBatchUpdates {
-                insertItems(at: indexPaths)
-            } completion: { [weak self] _ in
-                self?.applyEndDisplayFlag = true
-            }
+        }
+        performBatchUpdates {
+            insertItems(at: indexPaths)
+        } completion: { [weak self] _ in
+            self?.applyEndDisplayFlag = true
         }
     }
     

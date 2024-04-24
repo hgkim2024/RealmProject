@@ -29,4 +29,14 @@ class ItemDto: NSObject {
         return item
     }
     
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object as? ItemDto else { return false }
+        
+        if key == object.key
+            && number == object.number {
+            return true
+        } else {
+            return false
+        }
+    }
 }

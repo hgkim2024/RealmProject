@@ -58,9 +58,24 @@ class ItemRepository: RealmRepository<Item, String> {
         return itemDtos
     }
     
-    func pagingCenter(criteriaItem: ItemDto) -> [ItemDto]? {
-        // TODO: - 개발
-        return nil
+    func pagingFromCenter(centerItemDto: ItemDto) -> [ItemDto]? {
+        guard let upItems = pagingFromEndToStart(endItemDto: centerItemDto)?.sorted(by: { $0.number < $1.number }),
+              let downItems = pagingFromStartToEnd(startItemDto: centerItemDto) else {
+            return nil
+        }
+        
+        if upItems.isEmpty && downItems.isEmpty {
+            return nil
+        }
+        
+        let upFirst = upItems.first(where: { $0.number == centerItemDto.number })
+        let downFirst = downItems.first(where: { $0.number == centerItemDto.number })
+        
+        if upFirst == nil && downFirst == nil {
+            return upItems + [centerItemDto] + downItems
+        }
+        
+        return upItems + downItems
     }
     
     func printDtos(_ itemDtos: [ItemDto]) {
@@ -76,5 +91,9 @@ class ItemRepository: RealmRepository<Item, String> {
             
             Log.tag(.DB).tag(.PAGING).d(print)
         }
+    }
+    
+    func getItem(number: Int) -> ItemDto? {
+        return all.first(where: { $0.number == number })?.toDto()
     }
 }
