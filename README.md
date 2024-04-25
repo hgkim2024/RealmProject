@@ -22,6 +22,44 @@ let collectionView = PagingCollectionView(startPagingPosition: .BOTTOM)
 
 <br>
 
+- Collection View Search Paging
+```swift
+extension PagingCollectionViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        Log.tag(.DB).tag(.SEARCH).d(searchText)
+        let itemDto = ItemManager.shared.getItem(number: Int(searchText) ?? -1)
+        collectionView.searchItem(item: itemDto)
+    }
+}
+```
+
+- searchItem
+    - Search 시 성능 개선을 위해 Search Item 위치에 새로운 페이지로 로딩한다.
+```swift
+func searchItem(item: ItemDto?) {
+    applyEndDisplayFlag = false
+    isSearchFlag = true
+    isNextUpPage = true
+    searchItem = item
+    
+    if let item {
+        items = ItemManager.shared.getCollectionViewPagingItem(position: .CENTER, criteriaItem: item)
+    }
+    
+    reloadData()
+    
+    if let item, let index = items.firstIndex(of: item) {
+        scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredVertically, animated: false)
+    }
+    
+    isSearchFlag = false
+    applyEndDisplayFlag = true
+}
+```
+
+<br>
+
 ## Realm Notification Token
 - [Realm Notification Token 설명 글](https://www.notion.so/Realm-Notification-Token-1b4b652aa5c4471298a0015063a1e0f0?pvs=4)
 - 아래 Class 를 이용하여 Notifcation Token 을 등록하면 설정된 Table 의 CRUD Event 를 받을 수 있다.
