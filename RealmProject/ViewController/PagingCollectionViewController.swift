@@ -18,6 +18,16 @@ class PagingCollectionViewController: UIViewController {
         setUpCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        DispatchQueue.main.async { [weak self] in
+            if self?.collectionView.startPagingPosition == .BOTTOM {
+                self?.collectionView.scrollToBottom()
+            }
+        }
+    }
+    
     func setUpCollectionView() {
         view.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,12 +39,6 @@ class PagingCollectionViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
-        
-        DispatchQueue.main.async { [weak self] in
-            if self?.collectionView.startPagingPosition == .BOTTOM {
-                self?.collectionView.scrollToBottom()
-            }
-        }
     }
     
     func setUpSearchBar() {
