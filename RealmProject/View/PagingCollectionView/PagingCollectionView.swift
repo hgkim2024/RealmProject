@@ -92,7 +92,7 @@ class PagingCollectionView: UICollectionView {
         reloadData()
         
         if let item, let index = items.firstIndex(of: item) {
-            scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredVertically, animated: false)
+            scrollToItem(at: IndexPath(row: 0, section: index), at: .centeredVertically, animated: false)
         }
         
         isSearchFlag = false
@@ -102,11 +102,15 @@ class PagingCollectionView: UICollectionView {
 
 extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return items.count
+    }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return items.count
+        return 1
     }
     
     func collectionView(
@@ -114,7 +118,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.identifier, for: indexPath) as! PagingCollectionViewCell
-        cell.setItem(item: items[indexPath.row], searchItem: searchItem)
+        cell.setItem(item: items[indexPath.section], searchItem: searchItem)
         return cell
     }
     
@@ -137,10 +141,10 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         if !applyEndDisplayFlag { return }
         if curScrollDirection == .NONE { return }
         
-        if indexPath.row >= items.count - ItemManager.shared.countPerPage + 1
+        if indexPath.section >= items.count - ItemManager.shared.countPerPage + 1
             && curScrollDirection == .DOWN {
             downPaging()
-        } else if indexPath.row <= ItemManager.shared.countPerPage - 1
+        } else if indexPath.section <= ItemManager.shared.countPerPage - 1
                     && curScrollDirection == .UP {
             upPaging()
         }
@@ -176,16 +180,14 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func updateInsertItems(pagingItems: [ItemDto]) {
-        var indexPaths: [IndexPath] = []
-        for item in pagingItems {
-            if let index = items.firstIndex(of: item) {
-                indexPaths.append(IndexPath(row: index, section: 0))
+        if pagingItems.isEmpty { return }
+        if let startIndex = items.firstIndex(of: pagingItems.first!),
+           let endIndex = items.firstIndex(of: pagingItems.last!){
+            performBatchUpdates {
+                insertSections(IndexSet(Array(startIndex...endIndex)))
+            } completion: { [weak self] _ in
+                self?.applyEndDisplayFlag = true
             }
-        }
-        performBatchUpdates {
-            insertItems(at: indexPaths)
-        } completion: { [weak self] _ in
-            self?.applyEndDisplayFlag = true
         }
     }
     
