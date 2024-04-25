@@ -24,7 +24,7 @@ class PagingCollectionView: UICollectionView {
     
     let startPagingPosition: PagingPosition
     var items: [ItemDto]
-    var applyEndDisplayFlag: Bool
+    var isLoadingPage: Bool
     var lastContentOffset: CGFloat = 0
     var curScrollDirection: CollectionViewScrollDirection = .NONE
     var searchItem: ItemDto? = nil
@@ -36,7 +36,7 @@ class PagingCollectionView: UICollectionView {
     
     init(startPagingPosition: PagingPosition) {
         self.startPagingPosition = startPagingPosition
-        applyEndDisplayFlag = startPagingPosition != .BOTTOM
+        isLoadingPage = startPagingPosition != .BOTTOM
         scrollPreventHeight = cellHeight * 10
         items = ItemManager.shared.getCollectionViewPagingItem(position: startPagingPosition)
         
@@ -71,8 +71,8 @@ class PagingCollectionView: UICollectionView {
         let lastItemIndexPath = IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
         scrollToItem(at: lastItemIndexPath, at: .bottom, animated: false)
         
-        if !applyEndDisplayFlag {
-            applyEndDisplayFlag = true
+        if !isLoadingPage {
+            isLoadingPage = true
         }
         
         initFlag = false
@@ -80,7 +80,7 @@ class PagingCollectionView: UICollectionView {
     
     // : Search - 검색 시 새로운 페이지로 로딩 -> 데이터가 많은 경우에 바로 로딩하기 위함
     func searchItem(item: ItemDto?) {
-        applyEndDisplayFlag = false
+        isLoadingPage = false
         isSearchFlag = true
         isNextUpPage = true
         searchItem = item
@@ -96,7 +96,7 @@ class PagingCollectionView: UICollectionView {
         }
         
         isSearchFlag = false
-        applyEndDisplayFlag = true
+        isLoadingPage = true
     }
 }
 
@@ -138,7 +138,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         didEndDisplaying cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        if !applyEndDisplayFlag { return }
+        if !isLoadingPage { return }
         if curScrollDirection == .NONE { return }
         
         if indexPath.section >= items.count - ItemManager.shared.countPerPage + 1
@@ -152,12 +152,12 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     
     func upPaging() {
         Log.tag(.PAGING).d("Top")
-        applyEndDisplayFlag = false
+        isLoadingPage = false
         if items.isEmpty { return }
         let startItem = items[0]
         let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .BOTTOM, criteriaItem: startItem)
         if pagingItems.isEmpty {
-            applyEndDisplayFlag = true
+            isLoadingPage = true
             isNextUpPage = false
             return
         }
@@ -167,12 +167,12 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     
     func downPaging() {
         Log.tag(.PAGING).d("Bottom")
-        applyEndDisplayFlag = false
+        isLoadingPage = false
         if items.isEmpty { return }
         let endItem = items[items.count - 1]
         let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .TOP, criteriaItem: endItem)
         if pagingItems.isEmpty {
-            applyEndDisplayFlag = true
+            isLoadingPage = true
             return
         }
         items = items + pagingItems
@@ -186,7 +186,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
             performBatchUpdates {
                 insertSections(IndexSet(Array(startIndex...endIndex)))
             } completion: { [weak self] _ in
-                self?.applyEndDisplayFlag = true
+                self?.isLoadingPage = true
             }
         }
     }
