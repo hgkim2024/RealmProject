@@ -34,6 +34,8 @@ extension PagingCollectionViewController: UISearchResultsUpdating {
 }
 ```
 
+<br>
+
 - searchItem
     - Search 시 성능 개선을 위해 Search Item 위치에 새로운 페이지로 로딩한다.
 ```swift
