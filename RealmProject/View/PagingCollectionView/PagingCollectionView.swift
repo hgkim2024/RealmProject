@@ -161,7 +161,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
             isNextUpPage = false
             return
         }
-        items = pagingItems + items
+        items.insert(contentsOf: pagingItems, at: 0)
         updateInsertItems(pagingItems: pagingItems)
     }
     
@@ -175,7 +175,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
             isLoadingPage = true
             return
         }
-        items = items + pagingItems
+        items.append(contentsOf: pagingItems)
         updateInsertItems(pagingItems: pagingItems)
     }
     
