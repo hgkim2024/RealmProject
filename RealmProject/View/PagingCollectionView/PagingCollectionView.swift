@@ -201,6 +201,9 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
             if lastContentOffset <= scrollPreventHeight {
                 lastContentOffset = scrollPreventHeight
             }
+            
+            // : Up Paging 시 scrollView.contentOffset.y <= 0 이 경우 Page 추가 시 Scroll Position 이 자동으로 Top 으로 이동한다.
+            // : 아래 코드는 Up Paging 시 Scroll Position 을 유지하기 위한 용도 이다.
             scrollView.contentOffset = CGPoint(x: 0, y: lastContentOffset)
             upPaging()
         }
