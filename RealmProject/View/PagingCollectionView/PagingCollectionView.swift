@@ -93,6 +93,7 @@ class PagingCollectionView: UICollectionView {
         
         if let item, let index = items.firstIndex(of: item) {
             scrollToItem(at: IndexPath(row: 0, section: index), at: .centeredVertically, animated: false)
+//            layoutIfNeeded()
         }
         
         isSearchFlag = false
