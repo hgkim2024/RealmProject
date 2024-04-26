@@ -18,7 +18,9 @@ class ItemRepository: RealmRepository<Item, String> {
     private override init() { super.init() }
     
 //    override var all: Results<MessageTable> {
-//        return super.all.filter("loginId == %@", LinphoneManager.instance().mMyMcpttUri)
+//        return super.all
+//            .filter("loginId == %@", LinphoneManager.instance().mMyMcpttUri)
+//            .sorted(byKeyPath: "sendTime", ascending: true)
 //    }
     
     func autoAdd() {
