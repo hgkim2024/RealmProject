@@ -34,6 +34,16 @@ class PagingCollectionView: UICollectionView {
     let scrollPreventHeight: CGFloat
     var isNextUpPage: Bool = true
     
+    var isScrolledToBottom: Bool {
+        return contentSize.height <= contentOffset.y + bounds.height + cellHeight
+    }
+    
+    var isEqualCollectionViewItemSize: Bool {
+        let lastSection = numberOfSections
+        Log.tag(.PAGING).d("isEqual: \(lastSection == items.count), lastSection: \(lastSection), item count: \(items.count)")
+        return lastSection == items.count
+    }
+    
     init(startPagingPosition: PagingPosition) {
         self.startPagingPosition = startPagingPosition
         isLoadingPage = startPagingPosition != .BOTTOM
@@ -70,10 +80,6 @@ class PagingCollectionView: UICollectionView {
         
         let lastItemIndexPath = IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
         scrollToItem(at: lastItemIndexPath, at: .bottom, animated: false)
-        
-        if !isLoadingPage {
-            isLoadingPage = true
-        }
         
         initFlag = false
     }
@@ -152,7 +158,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func upPaging() {
-        Log.tag(.PAGING).d("Top")
+        Log.tag(.PAGING).d("upPaging")
         isLoadingPage = false
         if items.isEmpty { return }
         let startItem = items[0]
@@ -167,9 +173,15 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func downPaging() {
-        Log.tag(.PAGING).d("Bottom")
+        Log.tag(.PAGING).d("downPaging")
         isLoadingPage = false
         if items.isEmpty { return }
+        if !isEqualCollectionViewItemSize { // : 새로운 Message 가 들어와 items 는 갱신 되었지만 CollectionView 에 갱신되지 않은 경우
+            let startIndex = numberOfSections
+            let endIndex = items.count - 1
+            updateInsertItems(startIndex: startIndex, endIndex: endIndex)
+            return
+        }
         let endItem = items[items.count - 1]
         let pagingItems = ItemManager.shared.getCollectionViewPagingItem(position: .TOP, criteriaItem: endItem)
         if pagingItems.isEmpty {
@@ -182,18 +194,25 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     
     func updateInsertItems(pagingItems: [ItemDto]) {
         if pagingItems.isEmpty { return }
+        if isEqualCollectionViewItemSize { return }
         if let startIndex = items.firstIndex(of: pagingItems.first!),
            let endIndex = items.firstIndex(of: pagingItems.last!){
-            performBatchUpdates {
-                insertSections(IndexSet(Array(startIndex...endIndex)))
-            } completion: { [weak self] _ in
-                self?.isLoadingPage = true
-            }
+            updateInsertItems(startIndex: startIndex, endIndex: endIndex)
+        }
+    }
+    
+    func updateInsertItems(startIndex: Int, endIndex: Int) {
+        if isEqualCollectionViewItemSize { return }
+        Log.tag(.PAGING).d("startIndex: \(startIndex), endIndex: \(endIndex)")
+        performBatchUpdates { [weak self] in
+            self?.insertSections(IndexSet(Array(startIndex...endIndex)))
+        } completion: { [weak self] _ in
+            self?.isLoadingPage = true
         }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > lastContentOffset {
+        if scrollView.contentOffset.y > lastContentOffset || contentSize.height <= contentOffset.y + bounds.height + cellHeight {
             curScrollDirection = .DOWN
         } else if scrollView.contentOffset.y < lastContentOffset {
             curScrollDirection = .UP

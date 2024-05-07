@@ -24,6 +24,7 @@ class PagingCollectionViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             if self?.collectionView.startPagingPosition == .BOTTOM {
                 self?.collectionView.scrollToBottom()
+                self?.collectionView.isLoadingPage = true
             }
         }
     }
