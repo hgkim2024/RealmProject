@@ -202,6 +202,7 @@ extension PagingCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func updateInsertItems(startIndex: Int, endIndex: Int) {
+        if endIndex < 0 || startIndex == endIndex { return }
         if isEqualCollectionViewItemSize { return }
         Log.tag(.PAGING).d("startIndex: \(startIndex), endIndex: \(endIndex)")
         performBatchUpdates { [weak self] in
