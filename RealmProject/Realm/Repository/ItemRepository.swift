@@ -45,7 +45,8 @@ class ItemRepository: RealmRepository<Item, String> {
     }
     
     func pagingFromStartToEnd(startItemDto: ItemDto) -> [ItemDto]? {
-        guard let items = getPage(all: all, startObjectKey: startItemDto.key, byKeyPath: "number", ascending: true, countPerPage: countPerPage) else {
+        guard let first = all.first else { return nil }
+        guard let items = getPage(all: all, startObjectKey: startItemDto.key, criteriaObjectKey: first.key, byKeyPath: "number", ascending: true, countPerPage: countPerPage) else {
             return nil
         }
         
@@ -55,7 +56,8 @@ class ItemRepository: RealmRepository<Item, String> {
     }
     
     func pagingFromEndToStart(endItemDto: ItemDto) -> [ItemDto]? {
-        guard let items = getPage(all: all, startObjectKey: endItemDto.key, byKeyPath: "number", ascending: false, countPerPage: countPerPage) else {
+        guard let last = all.last else { return nil }
+        guard let items = getPage(all: all, startObjectKey: endItemDto.key, criteriaObjectKey: last.key, byKeyPath: "number", ascending: false, countPerPage: countPerPage) else {
             return nil
         }
         

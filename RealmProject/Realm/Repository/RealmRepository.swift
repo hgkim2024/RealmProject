@@ -66,19 +66,19 @@ class RealmRepository<T: Object, ID> {
     }
     
     // MARK: - Pagination
-    func getPage(all: Results<T>, startObjectKey: ID, byKeyPath: String, ascending: Bool, countPerPage: Int) -> [T]? {
+    func getPage(all: Results<T>, startObjectKey: ID, criteriaObjectKey: ID, byKeyPath: String, ascending: Bool, countPerPage: Int) -> [T]? {
         
         if ascending {
-            return getPageFromStartToEnd(all: all, startObjectKey: startObjectKey, byKeyPath: byKeyPath, countPerPage: countPerPage)
+            return getPageFromStartToEnd(all: all, startObjectKey: startObjectKey, criteriaObjectKey: criteriaObjectKey, byKeyPath: byKeyPath, countPerPage: countPerPage)
         } else {
-            return getPageFromEndToStart(all: all, startObjectKey: startObjectKey, byKeyPath: byKeyPath, countPerPage: countPerPage)
+            return getPageFromEndToStart(all: all, startObjectKey: startObjectKey, criteriaObjectKey: criteriaObjectKey, byKeyPath: byKeyPath, countPerPage: countPerPage)
         }
 
     }
     
-    private func getPageFromStartToEnd(all: Results<T>, startObjectKey: ID, byKeyPath: String, countPerPage: Int) -> [T]? {
+    private func getPageFromStartToEnd(all: Results<T>, startObjectKey: ID, criteriaObjectKey: ID, byKeyPath: String, countPerPage: Int) -> [T]? {
         guard let startItem = getOne(startObjectKey),
-              let firstItem = first else {
+              let firstItem = getOne(criteriaObjectKey) else {
             Log.tag(.DB).tag(.PAGING).e("not found start item")
             return nil
         }
@@ -102,9 +102,9 @@ class RealmRepository<T: Object, ID> {
         return items
     }
     
-    private func getPageFromEndToStart(all: Results<T>, startObjectKey: ID, byKeyPath: String, countPerPage: Int) -> [T]? {
+    private func getPageFromEndToStart(all: Results<T>, startObjectKey: ID, criteriaObjectKey: ID, byKeyPath: String, countPerPage: Int) -> [T]? {
         guard let endItem = getOne(startObjectKey),
-              let lastItem = last else {
+              let lastItem = getOne(criteriaObjectKey) else {
             Log.tag(.DB).tag(.PAGING).e("not found end item")
             return nil
         }
