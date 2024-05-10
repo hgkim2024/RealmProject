@@ -59,6 +59,17 @@ class RealmRepository<T: Object, ID> {
         }
     }
     
+    func delete(_ objects: Results<T>) { // : Delete
+        do {
+            try realm.write {
+                realm.delete(objects)
+            }
+        }
+        catch let e {
+            Log.tag(.DB).tag(.DELETE).tag(.FAIL).e(e.localizedDescription)
+        }
+    }
+    
     func delete(_ key: ID) {
         if let one = getOne(key) {
             delete(one)
