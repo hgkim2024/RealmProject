@@ -37,6 +37,17 @@ class RealmRepository<T: Object, ID> {
         }
     }
     
+    func add(_ objects: [T]) { // : Create, Update
+        do {
+            try realm.write {
+                realm.add(objects, update: .modified)
+            }
+        }
+        catch let e {
+            Log.tag(.DB).tag(.ADD).tag(.FAIL).e(e.localizedDescription)
+        }
+    }
+    
     func delete(_ object: T) { // : Delete
         do {
             try realm.write {
