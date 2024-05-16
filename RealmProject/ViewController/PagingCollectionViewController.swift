@@ -61,7 +61,7 @@ extension PagingCollectionViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
         Log.tag(.DB).tag(.SEARCH).d(searchText)
-        let itemDto = ItemManager.shared.getItem(number: Int(searchText) ?? -1)
-        collectionView.searchItem(item: itemDto)
+        let itemModel = ItemManager.shared.getItem(number: Int(searchText) ?? -1)
+        collectionView.searchItem(item: itemModel)
     }
 }

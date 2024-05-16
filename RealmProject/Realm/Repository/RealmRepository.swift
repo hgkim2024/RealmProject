@@ -149,8 +149,6 @@ class RealmRepository<T: Object, ID> {
             items.append(item)
         }
         
-//        itemDtos = itemDtos.sorted(by: { $0.number > $1.number })
-        
         return items
     }
 }

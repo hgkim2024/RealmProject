@@ -29,7 +29,7 @@ class PagingCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func setItem(item: ItemDto, searchItem: ItemDto?) {
+    func setItem(item: ItemModel, searchItem: ItemModel?) {
         label.text = "\(item.number)"
         
         if item.isEqual(searchItem) {

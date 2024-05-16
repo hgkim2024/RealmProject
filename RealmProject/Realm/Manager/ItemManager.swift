@@ -62,10 +62,10 @@ class ItemManager {
         let createSize = 10
         itemRepository.deleteAll()
         itemRepository.autoAdd(createSize)
-        let itemDtos = itemRepository.all.sorted(by: { $0.number < $1.number }).map({ $0.toDto() })
-        for itemDto in itemDtos {
-            itemDto.number += 10
-            itemRepository.add(itemDto.toRealm())
+        let itemModels = itemRepository.all.sorted(by: { $0.number < $1.number }).map({ $0.toModel() })
+        for itemModel in itemModels {
+            itemModel.number += 10
+            itemRepository.add(itemModel.toRealm())
         }
     }
     
@@ -85,7 +85,7 @@ class ItemManager {
     // MARK: - Pasination Code
     func printPagingFromStartToEnd(pageCount: Int) {
         if let firstItem = itemRepository.first,
-           var dtos = itemRepository.pagingFromStartToEnd(startItemDto: firstItem.toDto()) {
+           var models = itemRepository.pagingFromStartToEnd(startItemModel: firstItem.toModel()) {
             
             var i = 0
             while true {
@@ -93,25 +93,23 @@ class ItemManager {
                     break
                 }
                 
-                if let lastItem = dtos.last {
-                    let pageDtos = itemRepository.pagingFromStartToEnd(startItemDto: lastItem) ?? []
-                    if pageDtos.isEmpty == true {
+                if let lastItem = models.last {
+                    let pageModels = itemRepository.pagingFromStartToEnd(startItemModel: lastItem) ?? []
+                    if pageModels.isEmpty == true {
                         break
                     }
-                    dtos += pageDtos
+                    models += pageModels
                 } else {
                     break
                 }
                 i += 1
             }
-            
-//            itemRepository.printDtos(dtos)
         }
     }
     
     func printPagingFromEndToStart(pageCount: Int) {
         if let lastItem = itemRepository.last,
-           var dtos = itemRepository.pagingFromEndToStart(endItemDto: lastItem.toDto()) {
+           var models = itemRepository.pagingFromEndToStart(endItemModel: lastItem.toModel()) {
             
             var i = 0
             while true {
@@ -119,19 +117,17 @@ class ItemManager {
                     break
                 }
                 
-                if let firstItem = dtos.last {
-                    let pageDtos = itemRepository.pagingFromEndToStart(endItemDto: firstItem) ?? []
-                    if pageDtos.isEmpty == true {
+                if let firstItem = models.last {
+                    let pageModels = itemRepository.pagingFromEndToStart(endItemModel: firstItem) ?? []
+                    if pageModels.isEmpty == true {
                         break
                     }
-                    dtos += pageDtos
+                    models += pageModels
                 } else {
                     break
                 }
                 i += 1
             }
-            
-//            itemRepository.printDtos(dtos)
         }
     }
     
@@ -141,7 +137,7 @@ class ItemManager {
         itemRepository.autoAdd(createSize)
     }
     
-    func getCollectionViewPagingItem(position: PagingPosition, criteriaItem: ItemDto? = nil) -> [ItemDto] {
+    func getCollectionViewPagingItem(position: PagingPosition, criteriaItem: ItemModel? = nil) -> [ItemModel] {
     
         switch position {
             
@@ -150,38 +146,38 @@ class ItemManager {
             var startItem = criteriaItem
             
             if startItem == nil {
-                startItem = itemRepository.first?.toDto()
+                startItem = itemRepository.first?.toModel()
             } else {
-                if startItem!.isEqual(itemRepository.first?.toDto()) {
+                if startItem!.isEqual(itemRepository.first?.toModel()) {
                     return []
                 }
             }
             
             guard let startItem else { return [] }
-            guard let itemDtos = itemRepository.pagingFromStartToEnd(startItemDto: startItem) else {
+            guard let itemModels = itemRepository.pagingFromStartToEnd(startItemModel: startItem) else {
                 return []
             }
             
-            return itemDtos
+            return itemModels
             
         // : 일반 게시글 페이징
         case .BOTTOM:
             var endItem = criteriaItem
             
             if endItem == nil {
-                endItem = itemRepository.last?.toDto()
+                endItem = itemRepository.last?.toModel()
             } else {
-                if endItem!.isEqual(itemRepository.last?.toDto()) {
+                if endItem!.isEqual(itemRepository.last?.toModel()) {
                     return []
                 }
             }
             
             guard let endItem else { return [] }
-            guard let itemDtos = itemRepository.pagingFromEndToStart(endItemDto: endItem)?.sorted(by: { $0.number < $1.number }) else {
+            guard let itemModels = itemRepository.pagingFromEndToStart(endItemModel: endItem)?.sorted(by: { $0.number < $1.number }) else {
                 return []
             }
             
-            return itemDtos
+            return itemModels
         
         // : Search 페이징
         case .CENTER:
@@ -189,15 +185,15 @@ class ItemManager {
                 return []
             }
             
-            guard let itemDtos = itemRepository.pagingFromCenter(centerItemDto: criteriaItem) else {
+            guard let itemModels = itemRepository.pagingFromCenter(centerItemModel: criteriaItem) else {
                 return []
             }
             
-            return itemDtos
+            return itemModels
         }
     }
     
-    func getItem(number: Int) -> ItemDto? {
+    func getItem(number: Int) -> ItemModel? {
         return itemRepository.getItem(number: number)
     }
 }

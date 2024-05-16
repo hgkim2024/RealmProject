@@ -22,7 +22,7 @@ class Item: Object {
         return item
     }
 
-    func toDto() -> ItemDto {
-        return ItemDto(self)
+    func toModel() -> ItemModel {
+        return ItemModel(self)
     }
 }
